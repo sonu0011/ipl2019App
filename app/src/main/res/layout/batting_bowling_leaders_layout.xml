@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+<de.hdodenhof.circleimageview.CircleImageView
+    android:layout_width="65dp"
+    android:src="@drawable/karthik"
+    android:id="@+id/leader_image"
+    android:layout_margin="5dp"
+
+    android:background="@drawable/circular_shape"
+    android:layout_height="65dp"
+    />
+    <TextView
+
+        android:id="@+id/leader_heading"
+        android:layout_width="wrap_content"
+        android:text="ORANGE  CAP"
+        android:textSize="10dp"
+        android:textAlignment="center"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_marginLeft="5dp"
+        android:textColor="#fff"
+        android:layout_below="@+id/leader_image"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

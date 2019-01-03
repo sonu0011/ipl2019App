@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+
+    android:background="@drawable/square_rounded_corner">
+
+    <ImageView
+        android:layout_centerHorizontal="true"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/kohli"
+        android:id="@+id/most_four_sixes_image"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textSize="15dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="5dp"
+       android:layout_alignTop="@+id/most_four_sixes_image"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:id="@+id/most_four_sixes_position"
+        android:background="@drawable/small_circle"
+        android:textColor="#000"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/most_four_sixes_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Virat Kohli"
+        android:id="@+id/most_four_sixes_name"
+        android:textColor="#b3ffffff"
+        android:textSize="12dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/most_four_sixes_name"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/most_four_sixes_feat"
+        android:text=""
+        android:textColor="#ffffff"
+        android:textSize="12dp" />
+</RelativeLayout>
