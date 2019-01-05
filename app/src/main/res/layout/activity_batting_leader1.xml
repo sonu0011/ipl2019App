@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Activity.BattingLeaderActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <android.support.v7.widget.Toolbar
+        app:titleTextAppearance="@style/Toolbar.TitleText"
+        android:id="@+id/mytoolbr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:theme="@style/ToolbarTheme"
+        android:background="@color/colorPrimary" />
+    <ImageView
+        android:layout_below="@+id/mytoolbr"
+        android:id="@+id/tbl_bg"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="fitXY"
+         />
+
+    <ImageView
+android:layout_below="@+id/mytoolbr"
+        android:id="@+id/table_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+         />
+
+    <TextView
+        android:id="@+id/table_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/table_image"
+        android:layout_centerHorizontal="true"
+        android:text=""
+        android:textColor="#fff"
+        android:textSize="14dp" />
+
+    <TextView
+        android:id="@+id/table_feat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/table_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="2dp"
+        android:text=""
+        android:textColor="#fff"
+        android:textSize="14dp" />
+
+
+    <HorizontalScrollView
+        android:layout_below="@+id/tbl_bg"
+        android:id="@+id/horizontalView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TableLayout
+            android:layout_marginTop="1dp"
+            android:id="@+id/tablelayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:stretchColumns="*" />
+    </HorizontalScrollView>
+    </RelativeLayout>
+</ScrollView>
+
+

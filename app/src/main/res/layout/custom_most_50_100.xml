@@ -10,21 +10,21 @@
         android:layout_centerHorizontal="true"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/kohli"
+        android:src="@drawable/photo_missing"
         android:id="@+id/kohli_image"
         />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1"
-            android:textSize="15dp"
+            android:text=""
+            android:textSize="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="100dp"
             android:layout_marginBottom="20dp"
             android:textStyle="bold"
             android:gravity="center"
             android:id="@+id/kohli_position"
-            android:background="@drawable/small_circle"
+            android:background="@drawable/small_circle1"
             android:textColor="#000"/>
 
     <TextView
@@ -33,7 +33,7 @@
         android:layout_below="@+id/kohli_image"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:text="Virat Kohli"
+        android:text=""
         android:id="@+id/kohli_name"
         android:textColor="#b3ffffff"
         android:textSize="12dp" />

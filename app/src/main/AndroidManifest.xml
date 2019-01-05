@@ -27,8 +27,9 @@
         </activity>
         <activity
             android:name=".Activity.HomeActivity"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".Activity.BattingLeaderActivity" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".Activity.BattingLeaderActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".Activity.BowlingLeaderActivity" />
         <activity android:name=".Activity.TeamActivity"></activity>
     </application>

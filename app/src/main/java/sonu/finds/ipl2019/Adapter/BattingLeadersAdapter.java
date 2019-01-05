@@ -45,6 +45,10 @@ else if (bool ==2){
     return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.custom_most_four_sixes,viewGroup,false));
 
 }
+else if (bool == 3){
+    return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.custom_longest_six,viewGroup,false));
+
+}
 else {
     return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.custom_fastest_50_100,viewGroup,false));
 
@@ -59,14 +63,6 @@ else {
         viewHolder.posotion.setText(String.valueOf(model.getPosotion()));
         viewHolder.name.setText(model.getName());
         viewHolder.facility.setText(model.getFacility());
-//        if (bool == 1) {
-//            viewHolder.facility.setText(model.getFacility()+" Balls");
-//
-//        }
-//        if (bool == 0){
-//            viewHolder.facility.setText(model.getFacility());
-//
-//        }
 
     }
 
@@ -98,6 +94,13 @@ else {
                 name = itemView.findViewById(R.id.most_four_sixes_name);
                 facility = itemView.findViewById(R.id.most_four_sixes_feat);
                 image = itemView.findViewById(R.id.most_four_sixes_image);
+
+            }
+            if (bool ==3){
+                posotion = itemView.findViewById(R.id.longest_six_position);
+                name = itemView.findViewById(R.id.longest_six_name);
+                facility = itemView.findViewById(R.id.longest_six_feat);
+                image = itemView.findViewById(R.id.longest_six_image);
 
             }
         }

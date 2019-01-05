@@ -8,7 +8,8 @@
     <color name="LightSky">#061D42</color>
     <color name="LightYellow">#E3AA1E</color>
     <color name="LightPink">#D80038</color>
-    <color name="Black">#000</color>
+    <color name="Black">#6ad81b60</color>
+    <color name="lightBlack">#65000000</color>
     <color name="LightBallon">#8BA0C9</color>
     <color name="LightGreay">#808080</color>
     <color name="Blue">#28509B</color>
