@@ -65,7 +65,7 @@ public class BattingLeaderActivity extends AppCompatActivity {
 
         batting_heading = getIntent().getStringExtra("batting_heading");
 
-        if (batting_heading.equals("Best Average") || batting_heading.equals("Orange Cap")) {
+        if (batting_heading.equals("Best Batting Average") || batting_heading.equals("Orange Cap")) {
             setContentView(R.layout.activity_batting_leader1);
             fetchTableData();
             addHeaders();
@@ -122,7 +122,7 @@ public class BattingLeaderActivity extends AppCompatActivity {
                                     nametext.setText(name);
                                     int id =object.getInt("team_id");
                                     setBackgroundImages(id);
-                                    if (batting_heading.equals("Best Average")) {
+                                    if (batting_heading.equals("Best Batting Average")) {
                                         feat.setText(aver);
                                     }
                                     if (batting_heading.equals("Orange Cap")) {
@@ -278,7 +278,7 @@ public class BattingLeaderActivity extends AppCompatActivity {
 
             }
             tr.addView(getTextView(i + 1, modelList.get(i).getHs(), Color.WHITE, Typeface.NORMAL, ContextCompat.getColor(this, R.color.colorAccent)));
-            if (batting_heading.equals("Best Average")) {
+            if (batting_heading.equals("Best Batting Average")) {
                 tr.addView(getTextView(i + 1, modelList.get(i).getAvg(), Color.WHITE, Typeface.NORMAL, ContextCompat.getColor(this, R.color.Black)));
 
             } else {
