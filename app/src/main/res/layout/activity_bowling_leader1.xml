@@ -11,35 +11,44 @@
         android:id="@+id/back_imageview"
         android:layout_width="match_parent"
         android:layout_height="150dp"
+
         android:background="@drawable/gradient_effect_toolbar"/>
     <TextView
         android:id="@+id/bowling_leader_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:layout_margin="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/ic_chevron_left_black_24dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#fff"
-        android:textSize="14sp"
+        android:textSize="15sp"
+        android:textStyle="bold"
         android:id="@+id/bowling_leader_toolbar_text"
         android:layout_alignTop="@+id/bowling_leader_back"
         android:layout_centerHorizontal="true"
         android:text="Most Maiden Overs"/>
 
+    <HorizontalScrollView
+        android:layout_below="@+id/bowling_leader_back"
+        android:layout_width="match_parent"
+        android:layout_marginTop="54dp"
+        android:scrollbars="vertical|horizontal"
+        android:layout_height="wrap_content">
     <TableLayout
+        android:scrollbars="horizontal|vertical"
         android:id="@+id/tablelayout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
+        android:stretchColumns="*"
         android:orientation="horizontal"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:background="@drawable/rectangle_bg"
-        android:layout_below="@+id/bowling_leader_back"/>
 
+
+       />
+    </HorizontalScrollView>
 
 </RelativeLayout>
 

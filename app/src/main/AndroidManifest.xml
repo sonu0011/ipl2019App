@@ -28,11 +28,15 @@
         <activity
             android:name=".Activity.HomeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".Activity.BattingLeaderActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".Activity.BowlingLeaderActivity"
+        <activity
+            android:name=".Activity.BattingLeaderActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".Activity.BowlingLeaderActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activity.TeamActivity" />
+        <activity android:name=".Activity.DrawerActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".Activity.TeamActivity"></activity>
     </application>
 
 </manifest>

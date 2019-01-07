@@ -13,41 +13,30 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:weightSum="10">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/home_custom_toolbar_toggle_icon"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"
-                android:src="@drawable/ic_dehaze_black_24dp" />
+                android:src="@drawable/ic_sort_black_24dp" />
 
-            <EditText
+            <TextView
+                android:layout_alignTop="@+id/home_custom_toolbar_toggle_icon"
                 android:id="@+id/home_custom_toolbar_edittext"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="8"
-                android:background="@drawable/edittext_bg"
-                android:gravity="center"
-                android:hint="Player Name"
+                android:textColor="#fff"
+                android:layout_centerHorizontal="true"
+                android:textSize="16sp"
+                android:text="Indian Premier League 2019"
                 android:padding="5dp"
 
                 />
-
-            <ImageView
-                android:id="@+id/home_custom_toolbar_toggle_more"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:src="@drawable/ic_more_vert_black_24dp" />
-
-        </LinearLayout>
+        </RelativeLayout>
 
 
     </android.support.v7.widget.Toolbar>
@@ -76,16 +65,14 @@
             android:padding="5dp"
             android:text="2019 BOWLING  LEADERS"
             android:textColor="@color/White"
-            android:textSize="15dp" />
+            android:textSize="12dp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/batting_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/heading"
-            android:orientation="horizontal"
-            tools:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            tools:listitem="@layout/batting_bowling_leaders_layout" />
+            android:orientation="horizontal"/>
 
         <TextView
             android:layout_marginTop="5dp"
@@ -97,7 +84,7 @@
             android:padding="5dp"
             android:text="2019 BATTING LEADERS"
             android:textColor="@color/White"
-            android:textSize="15dp" />
+            android:textSize="12dp" />
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
@@ -105,8 +92,7 @@
             android:id="@+id/bowlingrecycleview"
             android:layout_below="@+id/heading1"
             android:orientation="horizontal"
-            tools:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            tools:listitem="@layout/batting_bowling_leaders_layout" />
+             />
     </RelativeLayout>
 
     <RelativeLayout

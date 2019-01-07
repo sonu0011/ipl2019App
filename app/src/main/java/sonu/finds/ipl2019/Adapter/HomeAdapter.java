@@ -1,5 +1,6 @@
 package sonu.finds.ipl2019.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -105,18 +106,28 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                         Intent intent =new Intent(context,TeamActivity.class);
                         intent.putExtra("team_id",list.get(getAdapterPosition()).getTeam_id());
                         context.startActivity(intent);
+                        Activity activity = (Activity) context;
+                        activity.overridePendingTransition(R.anim.left_to_right,
+                                R.anim.right_to_left);
                     }
                     if (value ==2){
                         //batsman
                         Intent intent =new Intent(context,BattingLeaderActivity.class);
                         intent.putExtra("batting_heading",list.get(getAdapterPosition()).getHeading());
                         context.startActivity(intent);
+                        Activity activity = (Activity) context;
+                        activity.overridePendingTransition(R.anim.left_to_right,
+                                R.anim.right_to_left);
                     }
                     if (value == 3){
                         //bowler
                         Intent intent =new Intent(context,BowlingLeaderActivity.class);
                         intent.putExtra("bowling_heading",list.get(getAdapterPosition()).getHeading());
-                        context.startActivity(intent);                    }
+                        context.startActivity(intent);
+                        Activity activity = (Activity) context;
+                        activity.overridePendingTransition(R.anim.left_to_right,
+                                R.anim.right_to_left);
+                    }
                 }
             });
         }

@@ -6,4 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".Activity.TeamActivity">
 
+    <ExpandableListView
+        android:id="@+id/expandible_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </android.support.constraint.ConstraintLayout>

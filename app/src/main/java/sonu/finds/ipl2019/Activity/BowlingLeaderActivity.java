@@ -120,7 +120,7 @@ public class BowlingLeaderActivity extends AppCompatActivity {
 
                                 if (batting_heading.equals("Best Strike Rate")) {
                                     player_name = object.getString("name");
-                                    teamname = setTeamName(team_id);
+                                     setTeamName(team_id);
                                     ball_bowled = object.getString("ball_bowled");
                                     total_wickets = object.getString("total_wickets");
                                     strike_rate = object.getString("strike_rate");
@@ -131,26 +131,26 @@ public class BowlingLeaderActivity extends AppCompatActivity {
                                 }
                                 if (batting_heading.equals("Best Economy Rate")) {
                                     player_name = object.getString("name");
-                                    teamname = setTeamName(team_id);
+                                     setTeamName(team_id);
                                     runs_given = object.getString("runs_given");
                                     over_bowled = object.getString("over_bowled");
                                     economy = object.getString("economy");
-                                    modelList1.add(new BowlingLeaderModel(player_name, i + 1, teamname,
+                                    modelList1.add(new BowlingLeaderModel(player_name, i + 1, team,
                                             Integer.valueOf(over_bowled), runs_given, economy));
 
                                 }
                                 if (batting_heading.equals("Best Bowling Average")) {
                                     player_name = object.getString("name");
-                                    teamname = setTeamName(team_id);
+                                      setTeamName(team_id);
                                     runs_given = object.getString("runs_given");
                                     total_wickets = object.getString("total_wickets");
                                     avg = object.getString("average");
-                                    modelList1.add(new BowlingLeaderModel(player_name, i + 1, teamname,
+                                    modelList1.add(new BowlingLeaderModel(player_name, i + 1, team,
                                             total_wickets, runs_given, avg));
                                 }
                                 if (batting_heading.equals("Best Bowling Innings")) {
                                     player_name = object.getString("name");
-                                    teamname = setTeamName(team_id);
+                                     setTeamName(team_id);
                                     match = object.getString("matches_played");
                                     innings = object.getInt("innings");
                                     over_bowled = object.getString("over_bowled");
@@ -159,7 +159,7 @@ public class BowlingLeaderActivity extends AppCompatActivity {
                                     avg = object.getString("average");
                                     economy = object.getString("economy");
                                     strike_rate = object.getString("strike_rate");
-                                    modelList1.add(new BowlingLeaderModel(i + 1, player_name, teamname,
+                                    modelList1.add(new BowlingLeaderModel(i + 1, player_name, team,
                                             match, innings, 4, runs_given,
                                             total_wickets, avg, economy, strike_rate));
 
@@ -167,7 +167,7 @@ public class BowlingLeaderActivity extends AppCompatActivity {
                                 }
                                 if (batting_heading.equals("Purple Cap")) {
                                     player_name = object.getString("name");
-                                    teamname = setTeamName(team_id);
+                                    setTeamName(team_id);
                                     match = object.getString("matches_played");
                                     innings = object.getInt("innings");
                                     over_bowled = object.getString("over_bowled");
@@ -176,17 +176,12 @@ public class BowlingLeaderActivity extends AppCompatActivity {
                                     avg = object.getString("average");
                                     economy = object.getString("economy");
                                     strike_rate = object.getString("strike_rate");
-//                                    four_wick = object.getInt("four_wickets_count");
-//                                    if (four_wick ==0){
-//                                        four_wick =0;
-//                                    }
-//                                    five_wick = object.getInt("five_wickets_count");
-//                                    if (five_wick ==0){
-//                                        five_wick =0;
-//                                    }
-                                    modelList1.add(new BowlingLeaderModel(i + 1, player_name, teamname, match,
+                                    four_wick = object.getInt("four_wickets_count");
+                                    five_wick = object.getInt("five_wickets_count");
+                                    Log.d(TAG, "onResponse: purple cap +"+four_wick +five_wick);
+                                    modelList1.add(new BowlingLeaderModel(i + 1, player_name, team, match,
                                             innings, Integer.valueOf(over_bowled), runs_given, total_wickets,
-                                            economy, avg, strike_rate, "0","0"));
+                                            economy, avg, strike_rate, String.valueOf(four_wick),String.valueOf(five_wick)));
                                 }
 
 
@@ -223,6 +218,17 @@ public class BowlingLeaderActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void addHeaders() {
+        back = findViewById(R.id.bowling_leader_back);
+        title = findViewById(R.id.bowling_leader_toolbar_text);
+        batting_heading = getIntent().getStringExtra("bowling_heading");
+        title.setText(batting_heading);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+
+            }
+        });
         modelList1 = new ArrayList<>();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -237,13 +243,13 @@ public class BowlingLeaderActivity extends AppCompatActivity {
         tr.addView(getTextView(0, "NAME", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
         tr.addView(getTextView(0, "TEAM", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
         if (batting_heading.equals("Best Strike Rate")) {
-            tr.addView(getTextView(0, "BALLS BOWLED", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
+            tr.addView(getTextView(0, "BALLS", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
             tr.addView(getTextView(0, "WKTS", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
             tr.addView(getTextView(0, "SR", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
         }
         if (batting_heading.equals("Best Economy Rate")) {
             tr.addView(getTextView(0, "RUNS", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
-            tr.addView(getTextView(0, "OVER BOWLED", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
+            tr.addView(getTextView(0, "OVRS", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
             tr.addView(getTextView(0, "EC", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
 
 
@@ -259,7 +265,7 @@ public class BowlingLeaderActivity extends AppCompatActivity {
             tr.addView(getTextView(0, "MAT", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
             tr.addView(getTextView(0, "INNS", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
             tr.addView(getTextView(0, "RUNS", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
-            tr.addView(getTextView(0, "OVER BOWLED", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
+            tr.addView(getTextView(0, "OVRS", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
             tr.addView(getTextView(0, "AVG", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
             tr.addView(getTextView(0, "EC", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
             tr.addView(getTextView(0, "SR", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
@@ -270,7 +276,7 @@ public class BowlingLeaderActivity extends AppCompatActivity {
             tr.addView(getTextView(0, "MAT", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
             tr.addView(getTextView(0, "INNS", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
             tr.addView(getTextView(0, "RUNS", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
-            tr.addView(getTextView(0, "OVER BOWLED", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
+            tr.addView(getTextView(0, "OVRS", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
             tr.addView(getTextView(0, "AVG", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
             tr.addView(getTextView(0, "EC", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
             tr.addView(getTextView(0, "SR", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
@@ -283,7 +289,7 @@ public class BowlingLeaderActivity extends AppCompatActivity {
     }
 
 
-    private String setTeamName(int id) {
+    private void setTeamName(int id) {
         switch (id) {
             case 1: {
                 team = "CSK";
@@ -320,7 +326,7 @@ public class BowlingLeaderActivity extends AppCompatActivity {
 
 
         }
-        return "";
+
     }
 
     /**

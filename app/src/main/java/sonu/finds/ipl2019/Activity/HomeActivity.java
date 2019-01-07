@@ -1,5 +1,6 @@
 package sonu.finds.ipl2019.Activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,8 +9,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
@@ -38,6 +41,7 @@ public class HomeActivity extends AppCompatActivity {
      List<HomeModel> list,list1,list3;
      HomeAdapter homeAdapter,homeAdapter1,homeAdapter2;
      int i=1;
+     ImageView toggle_image;
      LinearLayoutManager batting_manager, bowling_manager;
      GridLayoutManager team_manager;
 
@@ -45,6 +49,15 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        toggle_image =findViewById(R.id.home_custom_toolbar_toggle_icon);
+        toggle_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this,DrawerActivity.class));
+                overridePendingTransition(R.anim.left_to_right,
+                        R.anim.right_to_left);
+            }
+        });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);

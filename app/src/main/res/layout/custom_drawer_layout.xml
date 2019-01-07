@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/drawer_bg"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:src="@drawable/points_table_bg" />
+
+    <ImageView
+        android:id="@+id/drawer_icon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/ic_close_black_24dp" />
+
+    <ImageView
+        android:id="@+id/drawer_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/drawer_icon"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="3dp"
+        android:src="@drawable/line" />
+
+    <TextView
+        android:id="@+id/drawer_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/drawer_line"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:text="POINTS TABLE"
+        android:textColor="#fff"
+        android:textSize="11sp" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/drawer_text"
+        android:layout_marginStart="130dp"
+
+        android:src="@drawable/ic_arrow_forward_black_24dp"/>
+
+</RelativeLayout>

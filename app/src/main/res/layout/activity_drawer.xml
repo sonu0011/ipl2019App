@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+
+    tools:context=".Activity.DrawerActivity">
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+
+    android:onClick="BackPressed"
+    android:id="@+id/drawe_close"
+    android:src="@drawable/ic_close_black_24dp"/>
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@+id/drawe_close"
+        android:id="@+id/home_custom_toolbar_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textSize="16sp"
+        android:text="Indian Premier League 2019"
+        android:padding="15dp"
+
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/drawer_recycleview"
+        android:layout_below="@+id/drawe_close"
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent" />
+</RelativeLayout>
