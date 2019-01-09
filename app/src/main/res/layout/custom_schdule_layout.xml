@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/first_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#000"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/schdule_match_no"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingStart="20dp"
+            android:paddingTop="20dp"
+            android:text="1"
+            android:layout_gravity="center"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/schdule_match_team1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="3"
+            android:src="@drawable/kxi_logo" />
+
+        <TextView
+            android:id="@+id/schdeule_vs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="VS"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/schdule_match_team2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="3"
+            android:src="@drawable/srh_logo" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/first_layout"
+        android:background="#000"
+        android:orientation="horizontal"
+
+        android:weightSum="10">
+
+        <TextView
+            android:id="@+id/schdule_date_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:text="29 March 2019 8:00PM "
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/schdeult_stadium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:padding="10dp"
+            android:text="M. Chinnaswamy Stadium , Bangalore"
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:textSize="12sp" />
+    </LinearLayout>
+<TextView
+    android:layout_below="@+id/ll"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#fff"/>
+
+</RelativeLayout>

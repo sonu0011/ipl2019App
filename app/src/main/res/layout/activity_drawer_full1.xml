@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Support.CoordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".Activity.DrawerFullActivity">
+    <ImageView
+        android:id="@+id/back_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/gradient_effect_toolbar"/>
+    <TextView
+        android:id="@+id/full_drawer_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
+        android:onClick="GoToBack"
+        android:background="@drawable/ic_chevron_left_black_24dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textSize="15sp"
+        android:id="@+id/full_drawer_table_toolbar"
+        android:layout_alignTop="@+id/full_drawer_back"
+        android:layout_centerHorizontal="true"
+        android:text="Most Maiden Overs"/>
+
+    <HorizontalScrollView
+        android:layout_below="@+id/full_drawer_back"
+        android:layout_width="match_parent"
+        android:layout_marginTop="54dp"
+        android:scrollbars="vertical|horizontal"
+        android:layout_height="wrap_content">
+        <TableLayout
+            android:scrollbars="horizontal|vertical"
+            android:id="@+id/tablelayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:stretchColumns="*"
+            android:orientation="horizontal"
+
+
+            />
+    </HorizontalScrollView>
+
+</RelativeLayout>
+

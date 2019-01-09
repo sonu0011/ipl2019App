@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="5dp"
+    app:cardBackgroundColor="#fff"
+    app:cardElevation="5dp"
+    android:layout_margin="5dp"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/results_first_layout"
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textSize="10sp"
+
+            android:textStyle="bold"
+            android:gravity="center"
+            android:id="@+id/resutl_match_no"
+            android:background="@drawable/small_circle_lightbluee"
+            android:textColor="#fff"/>
+        <TextView
+            android:id="@+id/resutls_match_date"
+            android:text="Sunday 27th May 2018"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="3dp"
+        android:id="@+id/results_second_layout"
+        android:layout_below="@+id/results_first_layout"
+        android:layout_width="match_parent"
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/result_team1_name"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:layout_weight="6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text=" Chennai Super Kings"/>
+        <TextView
+            android:id="@+id/result_team1_score"
+            android:textStyle="bold"
+            android:text="181/2"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/result_team1_overs_wickets"
+            android:text="18.1/2"
+            android:textColor="#b4000000"
+            android:textSize="16sp"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/results_third_layout"
+        android:layout_below="@+id/results_second_layout"
+        android:layout_width="match_parent"
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/result_team2_name"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:layout_weight="6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text=" Chennai Super Kings"/>
+
+        <TextView
+            android:id="@+id/result_team2_score"
+            android:textStyle="bold"
+            android:text="181/2"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/result_team2_overs_wickets"
+            android:text="18.1/2"
+            android:textColor="#b4000000"
+            android:textSize="16sp"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+    <TextView
+        android:layout_below="@+id/results_third_layout"
+        android:gravity="center_horizontal"
+        android:textColor="@color/LightBlue"
+        android:textSize="14sp"
+        android:layout_marginTop="3dp"
+        android:id="@+id/result_result"
+        android:layout_width="wrap_content"
+       android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:text="Chennai Super Kings won by 1 wkt"/>
+<TextView
+    android:id="@+id/result_watch_highlight"
+    android:layout_below="@+id/result_result"
+    android:gravity="center_horizontal"
+    android:textColor="@color/LightBlue"
+    android:textSize="15sp"
+    android:textStyle="bold"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="3dp"
+    android:text="Watch Highlits"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
