@@ -14,4 +14,5 @@
     <color name="LightGreay">#808080</color>
     <color name="Blue">#28509B</color>
     <color name="White">#fff</color>
+    <color name="bg_color">#BABCC0</color>
 </resources>

@@ -3,13 +3,15 @@ package sonu.finds.ipl2019.Model;
 public class HomeModel {
     private String image_url,heading,teamimage_url;
     int team_id;
-    String drawer_heading,drawer_bg,drawer_icon;
+    String drawer_heading,drawer_bg,drawer_icon,team_heading,team_captain,team_coach;
 
     public HomeModel(String drawer_heading, String drawer_bg, String drawer_icon) {
         this.drawer_heading = drawer_heading;
         this.drawer_bg = drawer_bg;
         this.drawer_icon = drawer_icon;
     }
+
+
 
     public String getDrawer_heading() {
         return drawer_heading;
@@ -40,9 +42,37 @@ public class HomeModel {
         this.heading = heading;
     }
 
-    public HomeModel(String teamimageurl,int team_id) {
+    public String getTeam_heading() {
+        return team_heading;
+    }
+
+    public void setTeam_heading(String team_heading) {
+        this.team_heading = team_heading;
+    }
+
+    public String getTeam_captain() {
+        return team_captain;
+    }
+
+    public void setTeam_captain(String team_captain) {
+        this.team_captain = team_captain;
+    }
+
+    public String getTeam_coach() {
+        return team_coach;
+    }
+
+    public void setTeam_coach(String team_coach) {
+        this.team_coach = team_coach;
+    }
+
+    public HomeModel(String teamimageurl, int team_id, String team_heading, String team_captain, String team_coach) {
         this.teamimage_url  =teamimageurl;
         this.team_id =team_id;
+        this.team_heading = team_heading;
+        this.team_captain =team_captain;
+        this.team_coach = team_coach;
+
     }
 
     public int getTeam_id() {

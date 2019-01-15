@@ -1,13 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Support.CoordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_color"
     tools:context=".Activity.TeamActivity">
 
-    <ExpandableListView
-        android:id="@+id/expandible_listview"
+    <TextView
+        android:id="@+id/team_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+
+        android:background="@drawable/black_back" />
+
+    <ImageView
+        android:id="@+id/team_bg_image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_height="200dp"
+        android:layout_below="@+id/team_back"
+        android:layout_margin="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/csk_bg" />
+
+    <TextView
+        android:id="@+id/team_toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/team_back"
+        android:layout_centerHorizontal="true"
+        android:padding="5dp"
+        android:text="Chennai Super Kings"
+        android:textAllCaps="true"
+        android:textColor="#000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/team_captain_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/team_bg_image"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:padding="5dp"
+        android:text="Captain :"
+        android:textColor="#fff"
+
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/team_captain_title_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/team_captain_title"
+        android:layout_toEndOf="@+id/team_captain_title"
+        android:padding="5dp"
+        android:text="MS Dhoni"
+        android:textColor="#fff"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/team_coach_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/team_captain_title_value"
+        android:layout_alignBottom="@+id/team_bg_image"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@+id/team_captain_title_value"
+        android:padding="5dp"
+        android:text="Coach :"
+        android:textColor="#fff"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/team_coach_title_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/team_coach_title"
+
+        android:layout_toEndOf="@+id/team_coach_title"
+        android:padding="5dp"
+        android:text="Stephen Fleming"
+        android:textColor="#fff"
+        android:textSize="12sp" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/team_recycleview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/team_bg_image"
+        android:layout_margin="10dp"/>
+</RelativeLayout>
+

@@ -34,7 +34,8 @@
         <activity
             android:name=".Activity.BowlingLeaderActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activity.TeamActivity" />
+        <activity android:name=".Activity.TeamActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".Activity.DrawerActivity"
             android:theme="@style/AppTheme.NoActionBar" />

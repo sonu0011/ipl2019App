@@ -59,6 +59,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         if (value == 1) {
             HomeModel model = list.get(i);
+            Log.d(TAG, "onBindViewHolder: value  is 1"+model.getImage_url());
             Glide.with(context).load(model.getTeamimage_url()).into(viewHolder.imageView1);
         } else {
             HomeModel model = list.get(i);
@@ -105,6 +106,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                         //team
                         Intent intent =new Intent(context,TeamActivity.class);
                         intent.putExtra("team_id",list.get(getAdapterPosition()).getTeam_id());
+                        intent.putExtra("title",list.get(getAdapterPosition()).getTeam_heading());
+                        intent.putExtra("coach",list.get(getAdapterPosition()).getTeam_coach());
+                        intent.putExtra("captain",list.get(getAdapterPosition()).getTeam_captain());
                         context.startActivity(intent);
                         Activity activity = (Activity) context;
                         activity.overridePendingTransition(R.anim.left_to_right,

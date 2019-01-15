@@ -91,7 +91,10 @@ public class HomeActivity extends AppCompatActivity {
                                 if (checkvalue == 1) {
                                     String team_image = object.getString("team_image");
                                     int team_id = object.getInt("team_id");
-                                    modelList.add(new HomeModel(team_image,team_id));
+                                    String team_heading = object.getString("team_heading");
+                                    String team_captain = object.getString("team_captain");
+                                    String team_coach = object.getString("team_coach");
+                                    modelList.add(new HomeModel(team_image,team_id,team_heading,team_captain,team_coach));
 
                                 } else {
                                     String image = object.getString("image");
