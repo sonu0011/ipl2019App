@@ -9,6 +9,7 @@
     tools:context=".Activity.TeamActivity">
 
     <TextView
+        android:onClick="GoBackActivity"
         android:id="@+id/team_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

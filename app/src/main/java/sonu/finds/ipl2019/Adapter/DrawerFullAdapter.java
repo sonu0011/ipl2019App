@@ -43,6 +43,7 @@ public class DrawerFullAdapter extends RecyclerView.Adapter<DrawerFullAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         DrawerFullModel model = list.get(i);
         if (bool ==1) {
+            //schedule
             Glide.with(context).load(model.getTeam1image()).into(viewHolder.team1);
             Glide.with(context).load(model.getTeam2image()).into(viewHolder.team2);
             viewHolder.match_no.setText(model.getMatch_no());
@@ -50,6 +51,7 @@ public class DrawerFullAdapter extends RecyclerView.Adapter<DrawerFullAdapter.Vi
             viewHolder.venu.setText(model.getVenu());
         }
         if (bool ==2){
+            //highlists
             viewHolder.match_no.setText(model.getMatch_no());
             viewHolder.date.setText(model.getDate());
             viewHolder.team1Name.setText(model.getTeam1_Name());

@@ -1,11 +1,19 @@
 package sonu.finds.ipl2019.Activity;
 
+import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.opengl.GLU;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
@@ -17,6 +25,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -31,6 +40,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +60,7 @@ import sonu.finds.ipl2019.Adapter.BattingLeadersAdapter;
 import sonu.finds.ipl2019.Model.BattingLeadersModel;
 import sonu.finds.ipl2019.Model.TabularModel;
 import sonu.finds.ipl2019.R;
+import sonu.finds.ipl2019.Utills.SharedPreference;
 
 public class BattingLeaderActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -58,31 +72,71 @@ public class BattingLeaderActivity extends AppCompatActivity {
     ImageView imageView,background;
     List<TabularModel> modelList;
     TextView name, feat, pos, nametext;
+
+    int count = 0;
+    private BroadcastReceiver broadcastReceiver;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//
+//        IntentFilter intentFilter = new IntentFilter();
+//        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+//        broadcastReceiver =new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+//                NetworkInfo info = manager.getActiveNetworkInfo();
+//                if (info == null || !info.isConnected()) {
+//                    Log.d(TAG, "onReceive: no interner connection");
+//                    setContentView(R.layout.home_activity_no_internet_connection);
+//                    TextView button = findViewById(R.id.no_internet_btn);
+//                    button.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            startActivity(new Intent(Settings.ACTION_SETTINGS));
+//
+//                        }
+//                    });
+//                } else {
+                    batting_heading = getIntent().getStringExtra("batting_heading");
+                    if (batting_heading.equals("Best Batting Average") || batting_heading.equals("Orange Cap")) {
+                        setContentView(R.layout.activity_batting_leader1);
+                        Log.d(TAG, "onReceive: inside table");
+                            addHeaders();
+                            fetchTableData();
+                        return;
+                    } else {
+                        Log.d(TAG, "onReceive:recycleview  ");
+                        setContentView(R.layout.activity_batting_leader);
+                    }
+                    //initialize the things
+                    init();
+                    //fetch data
+                    fetchData();
 
-        batting_heading = getIntent().getStringExtra("batting_heading");
+//
+//                }
+//            }
+//        };
+//        registerReceiver(broadcastReceiver,intentFilter);
+//
 
-        if (batting_heading.equals("Best Batting Average") || batting_heading.equals("Orange Cap")) {
-            setContentView(R.layout.activity_batting_leader1);
-            fetchTableData();
-            addHeaders();
 
-
-            return;
-
-        } else {
-            setContentView(R.layout.activity_batting_leader);
-        }
-        //initialize the things
-        init();
-        //fetch data
-        fetchData();
     }
 
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        if (broadcastReceiver != null) {
+//            unregisterReceiver(broadcastReceiver);
+//            broadcastReceiver = null;
+//        }
+//    }
+
     private void fetchTableData() {
+
         modelList = new ArrayList<>();
         background =findViewById(R.id.tbl_bg);
         imageView = findViewById(R.id.table_image);

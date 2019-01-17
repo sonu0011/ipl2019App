@@ -1,7 +1,15 @@
 package sonu.finds.ipl2019.Activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,11 +21,18 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,6 +48,8 @@ import sonu.finds.ipl2019.API.MySingletonClass;
 import sonu.finds.ipl2019.Adapter.HomeAdapter;
 import sonu.finds.ipl2019.Model.HomeModel;
 import sonu.finds.ipl2019.R;
+import sonu.finds.ipl2019.Utills.CheckInternetConnection;
+import sonu.finds.ipl2019.Utills.SharedPreference;
 
 public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
@@ -44,40 +61,92 @@ public class HomeActivity extends AppCompatActivity {
      ImageView toggle_image;
      LinearLayoutManager batting_manager, bowling_manager;
      GridLayoutManager team_manager;
+    private CheckInternetConnection checkInternetConnection;
+    TextView internet_connection;
+    BroadcastReceiver broadcastReceiver;
+    ConnectivityManager connectivityManager;
+    NetworkInfo networkInfo;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        toggle_image =findViewById(R.id.home_custom_toolbar_toggle_icon);
-        toggle_image.setOnClickListener(new View.OnClickListener() {
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        broadcastReceiver =new BroadcastReceiver() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this,DrawerActivity.class));
-                overridePendingTransition(R.anim.left_to_right,
-                        R.anim.right_to_left);
+            public void onReceive(Context context, Intent intent) {
+                ConnectivityManager manager =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo info = manager.getActiveNetworkInfo();
+                if(info == null || !info.isConnected())
+                {
+                    Log.d(TAG, "onReceive: no interner connection");
+                    setContentView(R.layout.home_activity_no_internet_connection);
+                    TextView button = findViewById(R.id.no_internet_btn);
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(Settings.ACTION_SETTINGS));
+                        }
+                    });
+
+
+                }
+                else {
+                    Log.d(TAG, "onReceive: internet connection");
+                    setContentView(R.layout.activity_home);
+                    init();
+
+                    //set Batting leaders details 2 for batting
+                    setData("batting_leaders",batting,homeAdapter,list,2);
+
+                    //set Bowling  Leaders details 3 for bowling
+                    setData("bowling_leaders",bowling,homeAdapter1,list1,3);
+
+                    //set Team Data 1 for team
+                    setData("team_details",team,homeAdapter2,list3,i);
+                    FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( HomeActivity.this,  new OnSuccessListener<InstanceIdResult>() {
+                        @Override
+                        public void onSuccess(InstanceIdResult instanceIdResult) {
+                            String newToken = instanceIdResult.getToken();
+                            Log.e("newToken",newToken);
+                            String token =  SharedPreference.getInstance(HomeActivity.this).getDeviceToken();
+                            Log.d(TAG, "onSuccess: sharedpref_value"+token);
+                            if (token == null){
+                                SharedPreference.getInstance(getApplicationContext()).saveDeviceToken(newToken);
+                                sendToken(newToken);
+
+                            }
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d(TAG, "onFailure: "+e.getMessage());
+                        }
+                    });
+
+                }
+
             }
-        });
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getResources().getColor(R.color.colorPrimary));
-        }
-        //Initialise the things
-        init();
+        };
+        registerReceiver(broadcastReceiver,intentFilter);
 
-        //set Batting leaders details 2 for batting
-        setData("batting_leaders",batting,homeAdapter,list,2);
-
-        //set Bowling  Leaders details 3 for bowling
-        setData("bowling_leaders",bowling,homeAdapter1,list1,3);
-
-        //set Team Data 1 for team
-        setData("team_details",team,homeAdapter2,list3,i);
 
     }
 
+
+    @Override
+    protected void onDestroy() {
+        if (broadcastReceiver != null) {
+            unregisterReceiver(broadcastReceiver);
+            broadcastReceiver = null;
+        }
+        super.onDestroy();
+    }
     private void setData(final String parm, final RecyclerView mRecyclerView, final HomeAdapter adapter, final List<HomeModel>modelList, final int checkvalue) {
+
         StringRequest stringRequest =new StringRequest(StringRequest.Method.POST, Constants.REQUEST_URL,
                 new Response.Listener<String>() {
                     @Override
@@ -104,6 +173,8 @@ public class HomeActivity extends AppCompatActivity {
                                 }
                             }
                             setAdapter(mRecyclerView,adapter,modelList,checkvalue);
+                            progressBar.setVisibility(View.GONE);
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -144,26 +215,80 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void init() {
+        progressBar = findViewById(R.id.myProgressbar);
+        progressBar.setBackgroundColor(Color.BLACK);
          toolbar = findViewById(R.id.home_toolbar);
-         setSupportActionBar(toolbar);
-         batting =findViewById(R.id.batting_recyclerview);
-         bowling =findViewById(R.id.bowlingrecycleview);
-         team =findViewById(R.id.teamrecycleview);
-         list =new ArrayList<>();
-         list1 =new ArrayList<>();
-         list3 =new ArrayList<>();
-         batting_manager =new LinearLayoutManager(HomeActivity.this);
-         batting_manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-         bowling_manager =new LinearLayoutManager(HomeActivity.this);
-         bowling_manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-         team_manager =new GridLayoutManager(HomeActivity.this,3);
-         batting.setHasFixedSize(true);
-         batting.setLayoutManager(batting_manager);
-         bowling.setHasFixedSize(true);
-         bowling.setLayoutManager(bowling_manager);
-         team.setHasFixedSize(true);
-         team.setLayoutManager(team_manager);
+        setSupportActionBar(toolbar);
+        batting =findViewById(R.id.batting_recyclerview);
+        bowling =findViewById(R.id.bowlingrecycleview);
+        team =findViewById(R.id.teamrecycleview);
+        list =new ArrayList<>();
+        list1 =new ArrayList<>();
+        list3 =new ArrayList<>();
+        batting_manager =new LinearLayoutManager(HomeActivity.this);
+        batting_manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        bowling_manager =new LinearLayoutManager(HomeActivity.this);
+        bowling_manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        team_manager =new GridLayoutManager(HomeActivity.this,3);
+        batting.setHasFixedSize(true);
+        batting.setLayoutManager(batting_manager);
+        bowling.setHasFixedSize(true);
+        bowling.setLayoutManager(bowling_manager);
+        team.setHasFixedSize(true);
+        team.setLayoutManager(team_manager);
+        toggle_image =findViewById(R.id.home_custom_toolbar_toggle_icon);
+        toggle_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this,DrawerActivity.class));
+                overridePendingTransition(R.anim.left_to_right,
+                        R.anim.right_to_left);
+            }
+        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.colorPrimary));
+        }
+
 
     }
+
+    public void sendToken(final String token) {
+        Log.d(TAG, "sendToken: send token call");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_REGISTER_DEVICE,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e(TAG, "onResponse: token response " + response);
+                        try {
+                            JSONObject obj = new JSONObject(response);
+                            Log.d(TAG, "onResponse: " + obj.getString("message"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG, "onErrorResponse: token response" + error.toString());
+
+                    }
+                }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("device_name", token);
+                return params;
+            }
+        };
+        MySingletonClass.getMySingletonClass(this).addToRequestQuee(stringRequest);
+    }
+
+
+
 }
 

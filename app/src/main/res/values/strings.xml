@@ -8,4 +8,5 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="_2019">2019</string>
+    <string name="no_internet">There seems to be a problem with your internet connection. Please Check your internet connectivity and try again.</string>
 </resources>

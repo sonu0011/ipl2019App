@@ -1,7 +1,13 @@
 package sonu.finds.ipl2019.Activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,6 +51,7 @@ public class TeamActivity extends AppCompatActivity {
     ImageView imageView;
     TeamItemAdapter adapter;
     List<TeamItemModel> list;
+    private BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +59,49 @@ public class TeamActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        broadcastReceiver =new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                ConnectivityManager manager =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo info =  manager.getActiveNetworkInfo();
+                if(info == null || !info.isConnected())
+                {
+                    Log.d(TAG, "onReceive: no interner connection");
+                    setContentView(R.layout.home_activity_no_internet_connection);
+                    TextView button = findViewById(R.id.no_internet_btn);
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(Settings.ACTION_SETTINGS));
+                        }
+                    });
+
+
+                }
+                else {
+                    InitAndFetchData();
+
+
+                }
+
+            }
+        };
+        registerReceiver(broadcastReceiver,intentFilter);
+
+
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (broadcastReceiver != null) {
+            unregisterReceiver(broadcastReceiver);
+            broadcastReceiver = null;
+        }
+    }
+
+    private void InitAndFetchData() {
         team_id = getIntent().getIntExtra("team_id", 0);
         title_t = findViewById(R.id.team_toolbar_title);
         coach_t = findViewById(R.id.team_coach_title_value);
@@ -112,22 +163,49 @@ public class TeamActivity extends AppCompatActivity {
                         try {
                             JSONArray jsonArray = new JSONArray(response);
                             list.clear();
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject object = jsonArray.getJSONObject(i);
-                                String team_highest_scorer = object.getString("team_highest_scorer");
-                                String team_lowest_score = object.getString("team_lowest_score");
-                                String team_total_fours = object.getString("team_total_fours");
-                                String team_total_sixes = object.getString("team_total_sixes");
-                                String team_most_four_inning = object.getString("team_most_four_inning");
-                                String team_most_sixes_inning = object.getString("team_most_sixes_inning");
-                                String team_most_wickets_inning = object.getString("team_most_wickets_inning");
-                                String team_total_wickets = object.getString("team_total_wickets");
-                                String iteam_title = object.getString("iteam_title");
-                                list.add(new TeamItemModel(team_highest_scorer, team_lowest_score,
-                                        team_total_fours, team_total_sixes, team_most_sixes_inning,
-                                        team_most_four_inning, team_most_wickets_inning, team_total_wickets,
-                                        iteam_title));
 
+                            for (int i = 0; i < jsonArray.length()+4; i++) {
+                                if (i >= 8) {
+
+                                    switch (i){
+                                        case 9:
+                                            list.add(new TeamItemModel("", "",
+                                                    "", "", "",
+                                                    "", "", "",
+                                                    "Squad","SEE SQUAD"));
+                                            break;
+                                        case 10:
+                                            list.add(new TeamItemModel("", "",
+                                                    "", "", "",
+                                                    "", "", "",
+                                                    "Schedule","SEE SCHEDULE"));
+                                            break;
+                                        case 11:
+                                            list.add(new TeamItemModel("", "",
+                                                    "", "", "",
+                                                    "", "", "",
+                                                    "Highlights","WATCH HIGHLIGHTS"));
+                                            break;
+
+
+                                    }
+                                } else {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+                                    String team_highest_scorer = object.getString("team_highest_scorer");
+                                    String team_lowest_score = object.getString("team_lowest_score");
+                                    String team_total_fours = object.getString("team_total_fours");
+                                    String team_total_sixes = object.getString("team_total_sixes");
+                                    String team_most_four_inning = object.getString("team_most_four_inning");
+                                    String team_most_sixes_inning = object.getString("team_most_sixes_inning");
+                                    String team_most_wickets_inning = object.getString("team_most_wickets_inning");
+                                    String team_total_wickets = object.getString("team_total_wickets");
+                                    String iteam_title = object.getString("iteam_title");
+                                    list.add(new TeamItemModel(team_highest_scorer, team_lowest_score,
+                                            team_total_fours, team_total_sixes, team_most_sixes_inning,
+                                            team_most_four_inning, team_most_wickets_inning, team_total_wickets,
+                                            iteam_title, ""));
+
+                                }
                             }
                             adapter = new TeamItemAdapter(list, TeamActivity.this, 1,team_id);
                             recyclerView.setAdapter(adapter);
@@ -156,6 +234,10 @@ public class TeamActivity extends AppCompatActivity {
         MySingletonClass.getMySingletonClass(TeamActivity.this).addToRequestQuee(stringRequest);
 
 
+    }
+
+    public void GoBackActivity(View view) {
+        onBackPressed();
     }
 
     public static class Utility {

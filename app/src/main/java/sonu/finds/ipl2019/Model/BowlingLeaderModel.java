@@ -1,7 +1,7 @@
 package sonu.finds.ipl2019.Model;
 
 public class BowlingLeaderModel {
-    private int positon, balls_bowled, over_bowled,innings;
+    private int positon, balls_bowled, over_bowled,innings,hatric_count;
     private String image, name, feat, team_name, wicket_taken, runs_given,matches_played,four_wick,five_wick;
     private String strike_rate, average, economy;
 
@@ -15,6 +15,14 @@ public class BowlingLeaderModel {
         this.wicket_taken = wicket_taken;
         this.strike_rate = strike_rate;
 
+    }
+
+    public int getHatric_count() {
+        return hatric_count;
+    }
+
+    public void setHatric_count(int hatric_count) {
+        this.hatric_count = hatric_count;
     }
     //economy rate
 
@@ -61,6 +69,13 @@ public class BowlingLeaderModel {
         this.five_wick =five_wick;
 
 
+    }
+    //hatric coune
+    public  BowlingLeaderModel(int positon,String name,String team_name,int hatric_count,int i){
+        this.positon = positon;
+        this.name = name;
+        this.team_name = team_name;
+        this.hatric_count = hatric_count;
     }
 
     public int getInnings() {

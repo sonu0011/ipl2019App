@@ -1,8 +1,16 @@
 package sonu.finds.ipl2019.Activity;
 
+import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
@@ -52,13 +60,61 @@ public class BowlingLeaderActivity extends AppCompatActivity {
     List<BowlingLeaderModel> modelList, modelList1;
     String teamname, player_name, match, over_bowled, runs_given, total_wickets, avg, economy, strike_rate, ball_bowled, four_overs;
     int innings, four_wick, five_wick;
+    private BroadcastReceiver broadcastReceiver;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        broadcastReceiver =new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                ConnectivityManager manager =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo info =  manager.getActiveNetworkInfo();
+                if(info == null || !info.isConnected())
+                {
+                    Log.d(TAG, "onReceive: no interner connection");
+                    setContentView(R.layout.home_activity_no_internet_connection);
+                    TextView button = findViewById(R.id.no_internet_btn);
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(Settings.ACTION_SETTINGS));
+                        }
+                    });
 
+
+                }
+                else {
+                    InitAndFetchData();
+
+
+                }
+
+            }
+        };
+        registerReceiver(broadcastReceiver,intentFilter);
+
+
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (broadcastReceiver != null) {
+            unregisterReceiver(broadcastReceiver);
+            broadcastReceiver = null;
+        }
+    }
+
+    @SuppressLint("NewApi")
+    private void InitAndFetchData() {
         batting_heading = getIntent().getStringExtra("bowling_heading");
+        Log.d(TAG, "onCreate: "+batting_heading);
 
         if (batting_heading.equals("Most Maiden Overs") || batting_heading.equals("Most Dot Balls")
                 || batting_heading.equals("Fastest Ball")) {
@@ -183,6 +239,15 @@ public class BowlingLeaderActivity extends AppCompatActivity {
                                             innings, Integer.valueOf(over_bowled), runs_given, total_wickets,
                                             economy, avg, strike_rate, String.valueOf(four_wick),String.valueOf(five_wick)));
                                 }
+                               if (batting_heading.equals("Most Hat Tricks")){
+                                   player_name = object.getString("bow_name");
+                                   int count = object.getInt("bow_hatric_count");
+                                   setTeamName(team_id);
+                                   modelList1.add(new BowlingLeaderModel(i+1,player_name,team,count,1));
+
+
+
+                               }
 
 
                             }
@@ -282,6 +347,11 @@ public class BowlingLeaderActivity extends AppCompatActivity {
             tr.addView(getTextView(0, "SR", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
             tr.addView(getTextView(0, "4W", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
             tr.addView(getTextView(0, "5W", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
+
+
+        }
+        if (batting_heading.equals("Most Hat Tricks")){
+            tr.addView(getTextView(0, "HT", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
 
 
         }
@@ -393,6 +463,14 @@ public class BowlingLeaderActivity extends AppCompatActivity {
                 tr.addView(getTextView(i + 1, String.valueOf(modelList1.get(i).getStrike_rate()), Color.WHITE, Typeface.NORMAL, ContextCompat.getColor(this, R.color.colorAccent)));
                 tr.addView(getTextView(i + 1, String.valueOf(modelList1.get(i).getFour_wick()), Color.WHITE, Typeface.NORMAL, ContextCompat.getColor(this, R.color.colorAccent)));
                 tr.addView(getTextView(i + 1, String.valueOf(modelList1.get(i).getFive_wick()), Color.WHITE, Typeface.NORMAL, ContextCompat.getColor(this, R.color.colorAccent)));
+                tl.addView(tr, getTblLayoutParams());
+            }
+            if (batting_heading.equals("Most Hat Tricks")){
+                tr.addView(getTextView(i + 1, String.valueOf(modelList1.get(i).getPositon()), Color.WHITE, Typeface.NORMAL, ContextCompat.getColor(this, R.color.colorAccent)));
+                tr.addView(getTextView(i + 1, modelList1.get(i).getName(), Color.WHITE, Typeface.NORMAL, ContextCompat.getColor(this, R.color.colorAccent)));
+                tr.addView(getTextView(i + 1, modelList1.get(i).getTeam_name(), Color.WHITE, Typeface.NORMAL, ContextCompat.getColor(this, R.color.colorAccent)));
+                tr.addView(getTextView(i + 1, String.valueOf(modelList1.get(i).getHatric_count()), Color.WHITE, Typeface.NORMAL, ContextCompat.getColor(this, R.color.colorAccent)));
+
                 tl.addView(tr, getTblLayoutParams());
             }
         }

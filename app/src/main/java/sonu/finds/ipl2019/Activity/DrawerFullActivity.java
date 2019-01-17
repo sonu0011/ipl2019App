@@ -1,7 +1,14 @@
 package sonu.finds.ipl2019.Activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -50,10 +57,55 @@ public class DrawerFullActivity extends AppCompatActivity {
     TableLayout tableLayout;
     private static final String TAG = "DrawerFullActivity";
     RelativeLayout relativeLayout;
+    private BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        broadcastReceiver =new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                ConnectivityManager manager =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo info =  manager.getActiveNetworkInfo();
+                if(info == null || !info.isConnected())
+                {
+                    Log.d(TAG, "onReceive: no interner connection");
+                    setContentView(R.layout.home_activity_no_internet_connection);
+                    TextView button = findViewById(R.id.no_internet_btn);
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(Settings.ACTION_SETTINGS));
+                        }
+                    });
+
+
+                }
+                else {
+                    InitAndFetchData();
+
+
+                }
+
+            }
+        };
+        registerReceiver(broadcastReceiver,intentFilter);
+
+
+
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (broadcastReceiver != null) {
+            unregisterReceiver(broadcastReceiver);
+            broadcastReceiver = null;
+        }
+    }
+
+    private void InitAndFetchData() {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         toolbartext = getIntent().getStringExtra("drawer_heading");
         if (toolbartext.equals("SCHEDULE") || toolbartext.equals("HIGHLIGHTS")) {
@@ -201,7 +253,6 @@ public class DrawerFullActivity extends AppCompatActivity {
             }
         };
         MySingletonClass.getMySingletonClass(DrawerFullActivity.this).addToRequestQuee(stringRequest);
-
 
     }
 

@@ -47,7 +47,7 @@ android:layout_marginLeft="30dp"
             android:textSize="20sp"
             android:textColor="@color/colorPrimary" />
         <Button
-
+            android:visibility="invisible"
             android:layout_alignParentBottom="true"
             android:id="@+id/team_item_btn"
             android:gravity="center"
