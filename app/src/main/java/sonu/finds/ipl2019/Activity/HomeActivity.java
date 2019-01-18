@@ -67,6 +67,8 @@ public class HomeActivity extends AppCompatActivity {
     ConnectivityManager connectivityManager;
     NetworkInfo networkInfo;
     ProgressBar progressBar;
+    private static boolean firstConnect = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,8 @@ public class HomeActivity extends AppCompatActivity {
                 NetworkInfo info = manager.getActiveNetworkInfo();
                 if(info == null || !info.isConnected())
                 {
+                    firstConnect= true;
+
                     Log.d(TAG, "onReceive: no interner connection");
                     setContentView(R.layout.home_activity_no_internet_connection);
                     TextView button = findViewById(R.id.no_internet_btn);
@@ -94,38 +98,45 @@ public class HomeActivity extends AppCompatActivity {
 
                 }
                 else {
-                    Log.d(TAG, "onReceive: internet connection");
-                    setContentView(R.layout.activity_home);
-                    init();
+                    if(firstConnect) {
+                        Log.d(TAG, "onReceive: internet connection");
 
-                    //set Batting leaders details 2 for batting
-                    setData("batting_leaders",batting,homeAdapter,list,2);
+                        // do subroutines here
+                        setContentView(R.layout.activity_home);
+                        init();
 
-                    //set Bowling  Leaders details 3 for bowling
-                    setData("bowling_leaders",bowling,homeAdapter1,list1,3);
+                        //set Batting leaders details 2 for batting
+                        setData("batting_leaders",batting,homeAdapter,list,2);
 
-                    //set Team Data 1 for team
-                    setData("team_details",team,homeAdapter2,list3,i);
-                    FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( HomeActivity.this,  new OnSuccessListener<InstanceIdResult>() {
-                        @Override
-                        public void onSuccess(InstanceIdResult instanceIdResult) {
-                            String newToken = instanceIdResult.getToken();
-                            Log.e("newToken",newToken);
-                            String token =  SharedPreference.getInstance(HomeActivity.this).getDeviceToken();
-                            Log.d(TAG, "onSuccess: sharedpref_value"+token);
-                            if (token == null){
-                                SharedPreference.getInstance(getApplicationContext()).saveDeviceToken(newToken);
-                                sendToken(newToken);
+                        //set Bowling  Leaders details 3 for bowling
+                        setData("bowling_leaders",bowling,homeAdapter1,list1,3);
+
+                        //set Team Data 1 for team
+                        setData("team_details",team,homeAdapter2,list3,i);
+                        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( HomeActivity.this,  new OnSuccessListener<InstanceIdResult>() {
+                            @Override
+                            public void onSuccess(InstanceIdResult instanceIdResult) {
+                                String newToken = instanceIdResult.getToken();
+                                Log.e("newToken",newToken);
+                                String token =  SharedPreference.getInstance(HomeActivity.this).getDeviceToken();
+                                Log.d(TAG, "onSuccess: sharedpref_value"+token);
+                                if (token == null){
+                                    SharedPreference.getInstance(getApplicationContext()).saveDeviceToken(newToken);
+                                    sendToken(newToken);
+
+                                }
 
                             }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d(TAG, "onFailure: "+e.getMessage());
+                            }
+                        });
 
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d(TAG, "onFailure: "+e.getMessage());
-                        }
-                    });
+                        firstConnect = false;
+                    }
+
 
                 }
 

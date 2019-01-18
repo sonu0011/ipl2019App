@@ -61,6 +61,8 @@ public class BowlingLeaderActivity extends AppCompatActivity {
     String teamname, player_name, match, over_bowled, runs_given, total_wickets, avg, economy, strike_rate, ball_bowled, four_overs;
     int innings, four_wick, five_wick;
     private BroadcastReceiver broadcastReceiver;
+    private static boolean aBoolean;
+    int count = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -71,10 +73,11 @@ public class BowlingLeaderActivity extends AppCompatActivity {
         broadcastReceiver =new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                ConnectivityManager manager =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo info =  manager.getActiveNetworkInfo();
-                if(info == null || !info.isConnected())
-                {
+                ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo info = manager.getActiveNetworkInfo();
+                if (info == null || !info.isConnected()) {
+                    aBoolean = false;
+
                     Log.d(TAG, "onReceive: no interner connection");
                     setContentView(R.layout.home_activity_no_internet_connection);
                     TextView button = findViewById(R.id.no_internet_btn);
@@ -86,13 +89,17 @@ public class BowlingLeaderActivity extends AppCompatActivity {
                     });
 
 
+                } else {
+                    if (!aBoolean || count == 0) {
+                        aBoolean = true;
+                        count = count + 1;
+
+                        InitAndFetchData();
+
+
+                    }
+
                 }
-                else {
-                    InitAndFetchData();
-
-
-                }
-
             }
         };
         registerReceiver(broadcastReceiver,intentFilter);
@@ -234,7 +241,6 @@ public class BowlingLeaderActivity extends AppCompatActivity {
                                     strike_rate = object.getString("strike_rate");
                                     four_wick = object.getInt("four_wickets_count");
                                     five_wick = object.getInt("five_wickets_count");
-                                    Log.d(TAG, "onResponse: purple cap +"+four_wick +five_wick);
                                     modelList1.add(new BowlingLeaderModel(i + 1, player_name, team, match,
                                             innings, Integer.valueOf(over_bowled), runs_given, total_wickets,
                                             economy, avg, strike_rate, String.valueOf(four_wick),String.valueOf(five_wick)));
@@ -340,6 +346,7 @@ public class BowlingLeaderActivity extends AppCompatActivity {
         if (batting_heading.equals("Purple Cap")) {
             tr.addView(getTextView(0, "MAT", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
             tr.addView(getTextView(0, "INNS", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
+            tr.addView(getTextView(0, "WKTS", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
             tr.addView(getTextView(0, "RUNS", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
             tr.addView(getTextView(0, "OVRS", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
             tr.addView(getTextView(0, "AVG", Color.WHITE, Typeface.BOLD, getResources().getColor(R.color.colorPrimary)));
@@ -456,6 +463,7 @@ public class BowlingLeaderActivity extends AppCompatActivity {
                 tr.addView(getTextView(i + 1, String.valueOf(modelList1.get(i).getTeam_name()), Color.WHITE, Typeface.NORMAL, ContextCompat.getColor(this, R.color.colorAccent)));
                 tr.addView(getTextView(i + 1, String.valueOf(modelList1.get(i).getMatches_played()), Color.WHITE, Typeface.NORMAL, ContextCompat.getColor(this, R.color.colorAccent)));
                 tr.addView(getTextView(i + 1, String.valueOf(modelList1.get(i).getInnings()), Color.WHITE, Typeface.NORMAL, ContextCompat.getColor(this, R.color.colorAccent)));
+                tr.addView(getTextView(i + 1, String.valueOf(modelList1.get(i).getWicket_taken()), Color.WHITE, Typeface.NORMAL, ContextCompat.getColor(this, R.color.colorAccent)));
                 tr.addView(getTextView(i + 1, String.valueOf(modelList1.get(i).getRuns_given()), Color.WHITE, Typeface.NORMAL, ContextCompat.getColor(this, R.color.colorAccent)));
                 tr.addView(getTextView(i + 1, String.valueOf(modelList1.get(i).getOver_bowled()), Color.WHITE, Typeface.NORMAL, ContextCompat.getColor(this, R.color.colorAccent)));
                 tr.addView(getTextView(i + 1, String.valueOf(modelList1.get(i).getAverage()), Color.WHITE, Typeface.NORMAL, ContextCompat.getColor(this, R.color.colorAccent)));

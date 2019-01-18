@@ -58,6 +58,8 @@ public class DrawerFullActivity extends AppCompatActivity {
     private static final String TAG = "DrawerFullActivity";
     RelativeLayout relativeLayout;
     private BroadcastReceiver broadcastReceiver;
+    private static boolean aBoolean;
+    int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,8 @@ public class DrawerFullActivity extends AppCompatActivity {
                 NetworkInfo info =  manager.getActiveNetworkInfo();
                 if(info == null || !info.isConnected())
                 {
+                    aBoolean = false;
+
                     Log.d(TAG, "onReceive: no interner connection");
                     setContentView(R.layout.home_activity_no_internet_connection);
                     TextView button = findViewById(R.id.no_internet_btn);
@@ -84,7 +88,14 @@ public class DrawerFullActivity extends AppCompatActivity {
 
                 }
                 else {
-                    InitAndFetchData();
+                    if (!aBoolean || count == 0) {
+                        aBoolean = true;
+                        count = count + 1;
+
+                        InitAndFetchData();
+
+
+                    }
 
 
                 }

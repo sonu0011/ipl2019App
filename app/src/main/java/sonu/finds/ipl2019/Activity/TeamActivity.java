@@ -52,6 +52,8 @@ public class TeamActivity extends AppCompatActivity {
     TeamItemAdapter adapter;
     List<TeamItemModel> list;
     private BroadcastReceiver broadcastReceiver;
+    private static boolean aBoolean;
+    int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,7 @@ public class TeamActivity extends AppCompatActivity {
                 NetworkInfo info =  manager.getActiveNetworkInfo();
                 if(info == null || !info.isConnected())
                 {
+                    aBoolean = false;
                     Log.d(TAG, "onReceive: no interner connection");
                     setContentView(R.layout.home_activity_no_internet_connection);
                     TextView button = findViewById(R.id.no_internet_btn);
@@ -81,9 +84,14 @@ public class TeamActivity extends AppCompatActivity {
 
                 }
                 else {
-                    InitAndFetchData();
+                    if (!aBoolean || count == 0) {
+                        aBoolean = true;
+                        count = count + 1;
+
+                        InitAndFetchData();
 
 
+                    }
                 }
 
             }
@@ -102,6 +110,7 @@ public class TeamActivity extends AppCompatActivity {
     }
 
     private void InitAndFetchData() {
+        setContentView(R.layout.activity_team);
         team_id = getIntent().getIntExtra("team_id", 0);
         title_t = findViewById(R.id.team_toolbar_title);
         coach_t = findViewById(R.id.team_coach_title_value);
@@ -110,6 +119,7 @@ public class TeamActivity extends AppCompatActivity {
         titel = getIntent().getStringExtra("title");
         coach = getIntent().getStringExtra("coach");
         captain = getIntent().getStringExtra("captain");
+        Log.d(TAG, "InitAndFetchData: "+titel+" "+coach+"  "+captain);
         captain_title = findViewById(R.id.team_captain_title);
         coach_title = findViewById(R.id.team_coach_title);
 

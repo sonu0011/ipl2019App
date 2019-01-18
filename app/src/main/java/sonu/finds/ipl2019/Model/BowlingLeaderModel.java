@@ -65,7 +65,7 @@ public class BowlingLeaderModel {
         this.innings =innings;
         this.wicket_taken =wicket_taken;
         this.strike_rate =strike_rate;
-        this.five_wick =four_wick;
+        this.four_wick =four_wick;
         this.five_wick =five_wick;
 
 

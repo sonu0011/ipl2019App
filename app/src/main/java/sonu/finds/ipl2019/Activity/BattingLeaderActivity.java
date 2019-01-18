@@ -73,67 +73,73 @@ public class BattingLeaderActivity extends AppCompatActivity {
     List<TabularModel> modelList;
     TextView name, feat, pos, nametext;
 
-    int count = 0;
+        private static boolean aBoolean;
+        int count = 0;
     private BroadcastReceiver broadcastReceiver;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//
-//        IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-//        broadcastReceiver =new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-//                NetworkInfo info = manager.getActiveNetworkInfo();
-//                if (info == null || !info.isConnected()) {
-//                    Log.d(TAG, "onReceive: no interner connection");
-//                    setContentView(R.layout.home_activity_no_internet_connection);
-//                    TextView button = findViewById(R.id.no_internet_btn);
-//                    button.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            startActivity(new Intent(Settings.ACTION_SETTINGS));
-//
-//                        }
-//                    });
-//                } else {
-                    batting_heading = getIntent().getStringExtra("batting_heading");
-                    if (batting_heading.equals("Best Batting Average") || batting_heading.equals("Orange Cap")) {
-                        setContentView(R.layout.activity_batting_leader1);
-                        Log.d(TAG, "onReceive: inside table");
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        broadcastReceiver =new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo info = manager.getActiveNetworkInfo();
+                if (info == null || !info.isConnected()) {
+                    aBoolean = false;
+                    setContentView(R.layout.home_activity_no_internet_connection);
+                    TextView button = findViewById(R.id.no_internet_btn);
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(Settings.ACTION_SETTINGS));
+
+                        }
+                    });
+                } else {
+                    if (!aBoolean || count ==0) {
+                        aBoolean =true;
+                        count = count + 1;
+
+                        batting_heading = getIntent().getStringExtra("batting_heading");
+                        if (batting_heading.equals("Best Batting Average") || batting_heading.equals("Orange Cap")) {
+                            setContentView(R.layout.activity_batting_leader1);
+                            Log.d(TAG, "onReceive: inside table");
                             addHeaders();
                             fetchTableData();
-                        return;
-                    } else {
-                        Log.d(TAG, "onReceive:recycleview  ");
-                        setContentView(R.layout.activity_batting_leader);
-                    }
-                    //initialize the things
-                    init();
-                    //fetch data
-                    fetchData();
+                            return;
+                        } else {
+                            Log.d(TAG, "onReceive:recycleview  ");
+                            setContentView(R.layout.activity_batting_leader);
+                        }
+                        //initialize the things
+                        init();
+                        //fetch data
+                        fetchData();
 
-//
-//                }
-//            }
-//        };
-//        registerReceiver(broadcastReceiver,intentFilter);
-//
+
+                    }
+                }
+            }
+        };
+        registerReceiver(broadcastReceiver,intentFilter);
+
 
 
     }
 
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        if (broadcastReceiver != null) {
-//            unregisterReceiver(broadcastReceiver);
-//            broadcastReceiver = null;
-//        }
-//    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (broadcastReceiver != null) {
+            unregisterReceiver(broadcastReceiver);
+            broadcastReceiver = null;
+        }
+    }
 
     private void fetchTableData() {
 
