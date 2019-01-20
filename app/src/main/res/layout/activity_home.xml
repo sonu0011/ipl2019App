@@ -11,8 +11,7 @@
         android:id="@+id/home_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
-
+        android:background="@color/nice_color">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -47,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/home_toolbar"
-        android:background="@color/colorPrimary">
+        android:background="@color/nice_color">
 
         <TextView
             android:id="@+id/line"
@@ -63,11 +62,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/line"
             android:padding="5dp"
+            android:layout_marginLeft="2dp"
             android:text="2019 BOWLING  LEADERS"
             android:textColor="@color/White"
             android:textSize="12dp" />
 
         <android.support.v7.widget.RecyclerView
+            android:layout_margin="2dp"
             android:id="@+id/batting_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -82,11 +83,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/batting_recyclerview"
             android:padding="5dp"
+            android:layout_marginLeft="2dp"
             android:text="2019 BATTING LEADERS"
             android:textColor="@color/White"
             android:textSize="12dp" />
 
         <android.support.v7.widget.RecyclerView
+            android:layout_margin="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/bowlingrecycleview"
@@ -97,9 +100,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/mainrecy"
-        android:background="@drawable/image">
+        android:background="@color/nice_color">
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"

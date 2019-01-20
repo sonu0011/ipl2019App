@@ -49,6 +49,7 @@ import sonu.finds.ipl2019.API.MySingletonClass;
 import sonu.finds.ipl2019.Adapter.BowlingLeaderAdapter;
 import sonu.finds.ipl2019.Model.BowlingLeaderModel;
 import sonu.finds.ipl2019.R;
+import sonu.finds.ipl2019.Utills.CustomToast;
 
 public class BowlingLeaderActivity extends AppCompatActivity {
     String batting_heading, team;
@@ -156,8 +157,11 @@ public class BowlingLeaderActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if (response == null){
-                            Toast.makeText(BowlingLeaderActivity.this, "No Result", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onResponse: " + response);
+                        if (response.equals("")){
+                            Toast toast =  new CustomToast(BowlingLeaderActivity.this).GetToast();
+                            toast.show();
+                            return;
                         }
                         Log.d(TAG, "onResponse: " + response);
                         try {
@@ -166,20 +170,6 @@ public class BowlingLeaderActivity extends AppCompatActivity {
                            for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject object = jsonArray.getJSONObject(i);
                                 int team_id = object.getInt("team_id");
-////                                player_name = object.getString("name");
-////                                teamname = setTeamName(team_id);
-////                                match = object.getString("matches_played");
-////                                innings = object.getInt("innings");
-////                                over_bowled = object.getString("over_bowled");
-////                                runs_given = object.getString("runs_given");
-////                                total_wickets = object.getString("total_wickets");
-////                                avg = object.getString("average");
-////                                economy = object.getString("economy");
-////                                strike_rate = object.getString("strike_rate");
-////                                four_wick = object.getInt("four_wickets_count");
-////                                five_wick = object.getInt("five_wickets_count");
-////                                ball_bowled = object.getString("ball_bowled");
-////                                four_overs = object.getString("four_overs");
 
                                 if (batting_heading.equals("Best Strike Rate")) {
                                     player_name = object.getString("name");
@@ -522,6 +512,11 @@ public class BowlingLeaderActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        if (response.equals("")){
+                            Toast toast =  new CustomToast(BowlingLeaderActivity.this).GetToast();
+                            toast.show();
+                            return;
+                        }
                         Log.d(TAG, "onResponse: " + batting_heading + response);
                         try {
                             JSONArray jsonArray = new JSONArray(response);
@@ -554,7 +549,7 @@ public class BowlingLeaderActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put("get_bowling_details", "yes");
+                map.put("get_bowling_details1", "yes");
                 map.put("query", batting_heading);
                 return map;
             }

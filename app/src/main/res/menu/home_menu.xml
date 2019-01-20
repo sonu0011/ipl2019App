@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Share"
+        android:id="@+id/menu_share_app"/>
+    <item android:title="Rate Us"
+        android:id="@+id/menu_rate_us"/>
+    <item android:title="More Apps"
+        android:id="@+id/menu_more_apps"/>
+    <item android:id="@+id/menu_privacy"
+        android:title="Privacy Policy"/>
+
+
+
+</menu>

@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
@@ -36,6 +37,7 @@ import sonu.finds.ipl2019.API.MySingletonClass;
 import sonu.finds.ipl2019.Adapter.TeamItemAdapter;
 import sonu.finds.ipl2019.Model.TeamItemModel;
 import sonu.finds.ipl2019.R;
+import sonu.finds.ipl2019.Utills.CustomToast;
 
 public class ExtraTeamItemActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -119,6 +121,12 @@ public class ExtraTeamItemActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Log.d(TAG, "onResponse: " + response);
+
+                        if (response.equals("[]")){
+                            Toast toast =  new CustomToast(ExtraTeamItemActivity.this).GetToast();
+                            toast.show();
+                            return;
+                        }
                         try {
                             JSONArray jsonArray = new JSONArray(response);
                             list.clear();

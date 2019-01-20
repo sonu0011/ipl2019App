@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ public class BowlingLeaderAdapter extends RecyclerView.Adapter<BowlingLeaderAdap
     List<BowlingLeaderModel> list;
     Context context;
     int pos =0;
+    private int lastPosition = -1;
 
     public BowlingLeaderAdapter(List<BowlingLeaderModel> list, Context context, int pos) {
         this.list = list;
@@ -40,6 +43,13 @@ public class BowlingLeaderAdapter extends RecyclerView.Adapter<BowlingLeaderAdap
         viewHolder.name.setText(model.getName());
         viewHolder.positon.setText(String.valueOf(model.getPositon()));
         viewHolder.feat.setText(model.getFeat());
+        if(i >lastPosition) {
+
+            Animation animation = AnimationUtils.loadAnimation(context,
+                    R.anim.top_down);
+            viewHolder.itemView.startAnimation(animation);
+            lastPosition = i;
+        }
 
     }
 

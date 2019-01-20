@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-android:layout_marginLeft="30dp"
-    android:layout_marginRight="30dp"
+    android:layout_marginLeft="30dp"
     android:layout_marginTop="10dp"
+    android:layout_marginRight="30dp"
     android:layout_marginBottom="10dp"
-        app:cardBackgroundColor="#ceffffff"
+    app:cardBackgroundColor="#fff"
     app:cardCornerRadius="5dp"
-    app:cardElevation="5dp">
+    app:cardElevation="2dp">
 
 
     <RelativeLayout
@@ -18,17 +18,18 @@ android:layout_marginLeft="30dp"
         android:padding="10dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/team_item_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/team_item_image"
-            android:layout_marginTop="30dp"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/csk_bg"/>
+            android:layout_marginTop="30dp"
+            android:src="@drawable/csk_bg" />
+
         <TextView
-            android:layout_below="@+id/team_item_image"
             android:id="@+id/team_iteam_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/team_item_image"
             android:layout_centerHorizontal="true"
             android:padding="8dp"
             android:text="Most Sixes"
@@ -37,26 +38,27 @@ android:layout_marginLeft="30dp"
             android:textSize="20sp" />
 
         <TextView
+            android:text="---------"
             android:id="@+id/team_title_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/team_iteam_title"
             android:layout_centerHorizontal="true"
             android:padding="5dp"
-            android:text="60 Sixes"
-            android:textSize="20sp"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/nice_color"
+            android:textSize="20sp" />
+
         <Button
-            android:visibility="invisible"
-            android:layout_alignParentBottom="true"
             android:id="@+id/team_item_btn"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:background="@color/colorPrimary"
             android:drawableEnd="@drawable/ic_arrow_forward_black_24dp"
+            android:gravity="center"
             android:text="See Squad"
+            android:textColor="#fff"
             android:textSize="14sp"
-            android:textColor="#fff" />
+            android:visibility="invisible" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>

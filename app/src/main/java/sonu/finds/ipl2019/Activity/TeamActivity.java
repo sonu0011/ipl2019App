@@ -60,7 +60,6 @@ public class TeamActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_team);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         broadcastReceiver =new BroadcastReceiver() {
@@ -173,33 +172,60 @@ public class TeamActivity extends AppCompatActivity {
                         try {
                             JSONArray jsonArray = new JSONArray(response);
                             list.clear();
-
-                            for (int i = 0; i < jsonArray.length()+4; i++) {
-                                if (i >= 8) {
-
-                                    switch (i){
-                                        case 9:
-                                            list.add(new TeamItemModel("", "",
-                                                    "", "", "",
-                                                    "", "", "",
-                                                    "Squad","SEE SQUAD"));
-                                            break;
-                                        case 10:
-                                            list.add(new TeamItemModel("", "",
-                                                    "", "", "",
-                                                    "", "", "",
-                                                    "Schedule","SEE SCHEDULE"));
-                                            break;
-                                        case 11:
-                                            list.add(new TeamItemModel("", "",
-                                                    "", "", "",
-                                                    "", "", "",
-                                                    "Highlights","WATCH HIGHLIGHTS"));
-                                            break;
+                            for (int j=0;j<3;j++){
+                                Log.d(TAG, "onResponse: inside three for loop ");
+                                switch (j){
+                                    case 0:
+                                        list.add(new TeamItemModel("", "",
+                                                "", "", "",
+                                                "", "", "",
+                                                "Squad","SEE SQUAD"));
+                                        break;
+                                    case 1:
+                                        list.add(new TeamItemModel("", "",
+                                                "", "", "",
+                                                "", "", "",
+                                                "Schedule","SEE SCHEDULE"));
+                                        break;
+                                    case 2:
+                                        list.add(new TeamItemModel("", "",
+                                                "", "", "",
+                                                "", "", "",
+                                                "Highlights","WATCH HIGHLIGHTS"));
+                                        break;
 
 
-                                    }
-                                } else {
+                                }
+                            }
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                Log.d(TAG, "onResponse: inside response loop ");
+                               // if (i >= 8) {
+
+//                                    switch (i){
+//                                        case 9:
+//                                            list.add(new TeamItemModel("", "",
+//                                                    "", "", "",
+//                                                    "", "", "",
+//                                                    "Squad","SEE SQUAD"));
+//                                            break;
+//                                        case 10:
+//                                            list.add(new TeamItemModel("", "",
+//                                                    "", "", "",
+//                                                    "", "", "",
+//                                                    "Schedule","SEE SCHEDULE"));
+//                                            break;
+//                                        case 11:
+//                                            list.add(new TeamItemModel("", "",
+//                                                    "", "", "",
+//                                                    "", "", "",
+//                                                    "Highlights","WATCH HIGHLIGHTS"));
+//                                            break;
+//
+//
+//                                    }
+//                                }
+//                                else {
                                     JSONObject object = jsonArray.getJSONObject(i);
                                     String team_highest_scorer = object.getString("team_highest_scorer");
                                     String team_lowest_score = object.getString("team_lowest_score");
@@ -216,7 +242,7 @@ public class TeamActivity extends AppCompatActivity {
                                             iteam_title, ""));
 
                                 }
-                            }
+                            //}
                             adapter = new TeamItemAdapter(list, TeamActivity.this, 1,team_id);
                             recyclerView.setAdapter(adapter);
 

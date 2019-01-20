@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ public class TeamItemAdapter extends RecyclerView.Adapter<TeamItemAdapter.ViewHo
     Context context;
     int bool = 0;//2 squade  3 schdeule  4 //highlights  /  1 team_itesm
     int team_id;
+    private int lastPosition =-1;
 
     public TeamItemAdapter(List<TeamItemModel> list, Context context, int bool,int team_id) {
         this.list = list;
@@ -70,48 +73,74 @@ public class TeamItemAdapter extends RecyclerView.Adapter<TeamItemAdapter.ViewHo
                 viewHolder.title.setText(model.getTeam_item_title());
             }
             if (model.getTeam_item_title().equals("Highest Score")) {
+
                 viewHolder.title.setText(model.getTeam_item_title());
                 viewHolder.tit_value.setText(model.getHigh_score());
                 viewHolder.button.setVisibility(View.INVISIBLE);
+                if (model.getHigh_score().equals("")){
+                    viewHolder.tit_value.setText("------");
+                }
+
             }
             if (model.getTeam_item_title().equals("Lowest Score")) {
                 viewHolder.title.setText(model.getTeam_item_title());
                 viewHolder.tit_value.setText(model.getLow_socre());
+                if (model.getLow_socre().equals("")){
+                    viewHolder.tit_value.setText("------");
+                }
             }
             if (model.getTeam_item_title().equals("Total Fours")) {
                 viewHolder.title.setText(model.getTeam_item_title());
                 viewHolder.tit_value.setText(model.getTotal_fours());
                 viewHolder.button.setVisibility(View.INVISIBLE);
+                if (model.getTotal_fours().equals("")){
+                    viewHolder.tit_value.setText("------");
+                }
 
             }
             if (model.getTeam_item_title().equals("Total Sixes")) {
                 viewHolder.title.setText(model.getTeam_item_title());
                 viewHolder.tit_value.setText(model.getTotal_sixes());
                 viewHolder.button.setVisibility(View.INVISIBLE);
+                if (model.getTotal_sixes().equals("")){
+                    viewHolder.tit_value.setText("------");
+                }
 
             }
             if (model.getTeam_item_title().equals("Most Fours / Innings")) {
                 viewHolder.title.setText(model.getTeam_item_title());
                 viewHolder.tit_value.setText(model.getTeam_most_four_inng());
                 viewHolder.button.setVisibility(View.INVISIBLE);
+                if (model.getTeam_most_four_inng().equals("")){
+                    viewHolder.tit_value.setText("------");
+                }
 
             }
             if (model.getTeam_item_title().equals("Most Sixes / Innings")) {
                 viewHolder.title.setText(model.getTeam_item_title());
                 viewHolder.tit_value.setText(model.getTotal_most_sixes_inng());
                 viewHolder.button.setVisibility(View.INVISIBLE);
+                if (model.getTotal_most_sixes_inng().equals("")){
+                    viewHolder.tit_value.setText("------");
+                }
 
             }
             if (model.getTeam_item_title().equals("Total Wickets")) {
                 viewHolder.title.setText(model.getTeam_item_title());
                 viewHolder.tit_value.setText(model.getTeam_total_wickets());
                 viewHolder.button.setVisibility(View.INVISIBLE);
+                if (model.getTeam_total_wickets().equals("")){
+                    viewHolder.tit_value.setText("------");
+                }
 
             }
             if (model.getTeam_item_title().equals("Most Wickets / Innings")) {
                 viewHolder.title.setText(model.getTeam_item_title());
                 viewHolder.tit_value.setText(model.getTeam_most_wickets_inng());
                 viewHolder.button.setVisibility(View.INVISIBLE);
+                if (model.getTeam_most_wickets_inng().equals("")){
+                    viewHolder.tit_value.setText("------");
+                }
 
             }
             switch (team_id) {
@@ -141,11 +170,33 @@ public class TeamItemAdapter extends RecyclerView.Adapter<TeamItemAdapter.ViewHo
                     break;
 
 
+
+            }
+            if(i >lastPosition) {
+
+                Animation animation = AnimationUtils.loadAnimation(context,
+                        R.anim.down_to_top);
+                viewHolder.itemView.startAnimation(animation);
+                lastPosition = i;
             }
         }
         if (bool == 2){
             Glide.with(context).load(model.getPlayer_image()).into(viewHolder.player_image);
             viewHolder.player_name.setText(model.getPlayer_name());
+            if(i >lastPosition) {
+
+                Animation animation = AnimationUtils.loadAnimation(context,
+                        R.anim.top_down);
+                viewHolder.itemView.startAnimation(animation);
+                lastPosition = i;
+            }
+            if(i <lastPosition) {
+
+                Animation animation = AnimationUtils.loadAnimation(context,
+                        R.anim.down_to_top);
+                viewHolder.itemView.startAnimation(animation);
+                lastPosition = i;
+            }
 
         }
         if (bool == 3){
@@ -155,6 +206,20 @@ public class TeamItemAdapter extends RecyclerView.Adapter<TeamItemAdapter.ViewHo
             viewHolder.match_no.setText(model.getMatch_no());
             viewHolder.date.setText(model.getDate_time());
             viewHolder.venu.setText(model.getVenu());
+            if(i >lastPosition) {
+
+                Animation animation = AnimationUtils.loadAnimation(context,
+                        R.anim.top_down);
+                viewHolder.itemView.startAnimation(animation);
+                lastPosition = i;
+            }
+            if(i <lastPosition) {
+
+                Animation animation = AnimationUtils.loadAnimation(context,
+                        R.anim.down_to_top);
+                viewHolder.itemView.startAnimation(animation);
+                lastPosition = i;
+            }
 
         }
         if (bool == 4){
@@ -168,6 +233,20 @@ public class TeamItemAdapter extends RecyclerView.Adapter<TeamItemAdapter.ViewHo
             viewHolder.score_team2_score.setText(model.getScore_team2_score());
             viewHolder.over_team2_over.setText(model.getOver_team2_over());
             viewHolder.result_declare.setText(model.getResult_declare());
+            if(i >lastPosition) {
+
+                Animation animation = AnimationUtils.loadAnimation(context,
+                        R.anim.top_down);
+                viewHolder.itemView.startAnimation(animation);
+                lastPosition = i;
+            }
+            if(i <lastPosition) {
+
+                Animation animation = AnimationUtils.loadAnimation(context,
+                        R.anim.down_to_top);
+                viewHolder.itemView.startAnimation(animation);
+                lastPosition = i;
+            }
 
         }
 

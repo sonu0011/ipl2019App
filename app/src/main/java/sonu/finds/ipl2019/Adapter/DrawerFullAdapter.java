@@ -1,14 +1,17 @@
 package sonu.finds.ipl2019.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -21,6 +24,7 @@ public class DrawerFullAdapter extends RecyclerView.Adapter<DrawerFullAdapter.Vi
     private int bool = 0;
     private List<DrawerFullModel> list;
     private Context context;
+    private int lastPosition = -1;
 
     public DrawerFullAdapter(int bool, List<DrawerFullModel> list, Context context) {
         this.bool = bool;
@@ -42,11 +46,25 @@ public class DrawerFullAdapter extends RecyclerView.Adapter<DrawerFullAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         DrawerFullModel model = list.get(i);
+        if(i >lastPosition) {
+
+            Animation animation = AnimationUtils.loadAnimation(context,
+                    R.anim.top_down);
+            viewHolder.itemView.startAnimation(animation);
+            lastPosition = i;
+        }
+        if(i <lastPosition) {
+
+            Animation animation = AnimationUtils.loadAnimation(context,
+                    R.anim.down_to_top);
+            viewHolder.itemView.startAnimation(animation);
+            lastPosition = i;
+        }
         if (bool ==1) {
             //schedule
             Glide.with(context).load(model.getTeam1image()).into(viewHolder.team1);
             Glide.with(context).load(model.getTeam2image()).into(viewHolder.team2);
-            viewHolder.match_no.setText(model.getMatch_no());
+            viewHolder.match_no.setText("#"+model.getMatch_no());
             viewHolder.date.setText(model.getDate());
             viewHolder.venu.setText(model.getVenu());
         }
@@ -103,7 +121,9 @@ public class DrawerFullAdapter extends RecyclerView.Adapter<DrawerFullAdapter.Vi
                 highlights.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(context, "watch highlits cliked"+list.get(getAdapterPosition()).getHighlits(), Toast.LENGTH_SHORT).show();
+                        Intent intent4 = new Intent(Intent.ACTION_VIEW);
+                        intent4.setData(Uri.parse(list.get(getAdapterPosition()).getHighlits()));
+                        context.startActivity(intent4);
                     }
                 });
             }

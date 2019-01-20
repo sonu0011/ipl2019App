@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +24,8 @@ public class BattingLeadersAdapter extends RecyclerView.Adapter<BattingLeadersAd
     List<BattingLeadersModel> leadersModels;
     int bool =0;
     private static final String TAG = "BattingLeadersAdapter";
+    private int lastPosition = -1;
+
     public BattingLeadersAdapter(Context context, List<BattingLeadersModel> leadersModels) {
         this.context = context;
         this.leadersModels = leadersModels;
@@ -63,6 +67,13 @@ else {
         viewHolder.posotion.setText(String.valueOf(model.getPosotion()));
         viewHolder.name.setText(model.getName());
         viewHolder.facility.setText(model.getFacility());
+        if(i >lastPosition) {
+
+            Animation animation = AnimationUtils.loadAnimation(context,
+                    R.anim.top_down);
+            viewHolder.itemView.startAnimation(animation);
+            lastPosition = i;
+        }
 
     }
 

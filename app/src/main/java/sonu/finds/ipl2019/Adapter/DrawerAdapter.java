@@ -43,6 +43,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
         viewHolder.title.setText(model.getDrawer_heading());
 
 
+
     }
 
     @Override

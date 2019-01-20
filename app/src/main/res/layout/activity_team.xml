@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Widget.Support.CoordinatorLayout"
     android:layout_width="match_parent"
+    android:background="@color/nice_color"
     android:layout_height="match_parent"
-    android:background="@color/bg_color"
+
     tools:context=".Activity.TeamActivity">
 
     <TextView
@@ -18,11 +19,14 @@
         android:background="@drawable/black_back" />
 
     <ImageView
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="10dp"
         android:id="@+id/team_bg_image"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_below="@+id/team_back"
-        android:layout_margin="10dp"
         android:scaleType="fitXY"
         android:src="@drawable/csk_bg" />
 
@@ -35,7 +39,7 @@
         android:padding="5dp"
         android:text="Chennai Super Kings"
         android:textAllCaps="true"
-        android:textColor="#000"
+        android:textColor="#fff"
         android:textSize="16sp" />
 
     <TextView
@@ -59,7 +63,7 @@
         android:layout_alignTop="@+id/team_captain_title"
         android:layout_toEndOf="@+id/team_captain_title"
         android:padding="5dp"
-        android:text="MS Dhoni"
+        android:text="-------"
         android:textColor="#fff"
         android:textSize="12sp" />
 
@@ -82,10 +86,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/team_coach_title"
-
+        android:text="-------"
         android:layout_toEndOf="@+id/team_coach_title"
         android:padding="5dp"
-        android:text="Stephen Fleming"
         android:textColor="#fff"
         android:textSize="12sp" />
 

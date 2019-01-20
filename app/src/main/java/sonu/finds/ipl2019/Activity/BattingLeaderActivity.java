@@ -60,6 +60,7 @@ import sonu.finds.ipl2019.Adapter.BattingLeadersAdapter;
 import sonu.finds.ipl2019.Model.BattingLeadersModel;
 import sonu.finds.ipl2019.Model.TabularModel;
 import sonu.finds.ipl2019.R;
+import sonu.finds.ipl2019.Utills.CustomToast;
 import sonu.finds.ipl2019.Utills.SharedPreference;
 
 public class BattingLeaderActivity extends AppCompatActivity {
@@ -393,6 +394,11 @@ public class BattingLeaderActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Log.d(TAG, "onResponse: " + batting_heading + response);
+                        if (response.equals("")){
+                            Toast toast =  new CustomToast(BattingLeaderActivity.this).GetToast();
+                            toast.show();
+                            return;
+                        }
                         try {
                             JSONArray jsonArray = new JSONArray(response);
                             list.clear();
@@ -483,7 +489,6 @@ public class BattingLeaderActivity extends AppCompatActivity {
         name = findViewById(R.id.bl_name);
         feat = findViewById(R.id.bl_feat);
         pos = findViewById(R.id.position);
-        Toast.makeText(this, "" + batting_heading, Toast.LENGTH_LONG).show();
 
 
     }

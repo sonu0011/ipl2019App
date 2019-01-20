@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -17,12 +18,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -53,14 +57,14 @@ import sonu.finds.ipl2019.Utills.SharedPreference;
 
 public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
-     Toolbar toolbar;
-     RecyclerView batting, bowling, team;
-     List<HomeModel> list,list1,list3;
-     HomeAdapter homeAdapter,homeAdapter1,homeAdapter2;
-     int i=1;
-     ImageView toggle_image;
-     LinearLayoutManager batting_manager, bowling_manager;
-     GridLayoutManager team_manager;
+    Toolbar toolbar;
+    RecyclerView batting, bowling, team;
+    List<HomeModel> list, list1, list3;
+    HomeAdapter homeAdapter, homeAdapter1, homeAdapter2;
+    int i = 1;
+    ImageView toggle_image;
+    LinearLayoutManager batting_manager, bowling_manager;
+    GridLayoutManager team_manager;
     private CheckInternetConnection checkInternetConnection;
     TextView internet_connection;
     BroadcastReceiver broadcastReceiver;
@@ -76,14 +80,13 @@ public class HomeActivity extends AppCompatActivity {
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        broadcastReceiver =new BroadcastReceiver() {
+        broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                ConnectivityManager manager =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo info = manager.getActiveNetworkInfo();
-                if(info == null || !info.isConnected())
-                {
-                    firstConnect= true;
+                if (info == null || !info.isConnected()) {
+                    firstConnect = true;
 
                     Log.d(TAG, "onReceive: no interner connection");
                     setContentView(R.layout.home_activity_no_internet_connection);
@@ -96,9 +99,8 @@ public class HomeActivity extends AppCompatActivity {
                     });
 
 
-                }
-                else {
-                    if(firstConnect) {
+                } else {
+                    if (firstConnect) {
                         Log.d(TAG, "onReceive: internet connection");
 
                         // do subroutines here
@@ -106,21 +108,21 @@ public class HomeActivity extends AppCompatActivity {
                         init();
 
                         //set Batting leaders details 2 for batting
-                        setData("batting_leaders",batting,homeAdapter,list,2);
+                        setData("batting_leaders", batting, homeAdapter, list, 2);
 
                         //set Bowling  Leaders details 3 for bowling
-                        setData("bowling_leaders",bowling,homeAdapter1,list1,3);
+                        setData("bowling_leaders", bowling, homeAdapter1, list1, 3);
 
                         //set Team Data 1 for team
-                        setData("team_details",team,homeAdapter2,list3,i);
-                        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( HomeActivity.this,  new OnSuccessListener<InstanceIdResult>() {
+                        setData("team_details", team, homeAdapter2, list3, i);
+                        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(HomeActivity.this, new OnSuccessListener<InstanceIdResult>() {
                             @Override
                             public void onSuccess(InstanceIdResult instanceIdResult) {
                                 String newToken = instanceIdResult.getToken();
-                                Log.e("newToken",newToken);
-                                String token =  SharedPreference.getInstance(HomeActivity.this).getDeviceToken();
-                                Log.d(TAG, "onSuccess: sharedpref_value"+token);
-                                if (token == null){
+                                Log.e("newToken", newToken);
+                                String token = SharedPreference.getInstance(HomeActivity.this).getDeviceToken();
+                                Log.d(TAG, "onSuccess: sharedpref_value" + token);
+                                if (token == null) {
                                     SharedPreference.getInstance(getApplicationContext()).saveDeviceToken(newToken);
                                     sendToken(newToken);
 
@@ -130,7 +132,7 @@ public class HomeActivity extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.d(TAG, "onFailure: "+e.getMessage());
+                                Log.d(TAG, "onFailure: " + e.getMessage());
                             }
                         });
 
@@ -142,11 +144,48 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         };
-        registerReceiver(broadcastReceiver,intentFilter);
+        registerReceiver(broadcastReceiver, intentFilter);
 
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.home_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.menu_rate_us:
+                Intent shareintetn = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName()));
+                startActivity(shareintetn);
+                return true;
+            case R.id.menu_more_apps:
+                Intent rateIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/developer?id=Sonu+Finds"));
+                startActivity(rateIntent);
+                return true;
+            case R.id.menu_privacy:
+                Intent intent4 = new Intent(Intent.ACTION_VIEW);
+                intent4.setData(Uri.parse("https://www.youtube.com/channel/UCNPqfWK6Cd4ksdrhkQB7B9w?view_as=subscriber"));
+                startActivity(intent4);
+                return true;
+            case R.id.menu_share_app:
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_SUBJECT, "Indian Premier League 2019");
+                String sAux = "\nDownload The App For IPL2019 Updates\n\n";
+                sAux = sAux + "https://play.google.com/store/apps/details?id=" + getPackageName() + "";
+                i.putExtra(Intent.EXTRA_TEXT, sAux);
+                startActivity(Intent.createChooser(i, "choose one"));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     protected void onDestroy() {
@@ -156,17 +195,18 @@ public class HomeActivity extends AppCompatActivity {
         }
         super.onDestroy();
     }
-    private void setData(final String parm, final RecyclerView mRecyclerView, final HomeAdapter adapter, final List<HomeModel>modelList, final int checkvalue) {
 
-        StringRequest stringRequest =new StringRequest(StringRequest.Method.POST, Constants.REQUEST_URL,
+    private void setData(final String parm, final RecyclerView mRecyclerView, final HomeAdapter adapter, final List<HomeModel> modelList, final int checkvalue) {
+
+        StringRequest stringRequest = new StringRequest(StringRequest.Method.POST, Constants.REQUEST_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d(TAG, "onResponse: "+response);
+                        Log.d(TAG, "onResponse: " + response);
                         try {
-                            JSONArray jsonArray =new JSONArray(response);
+                            JSONArray jsonArray = new JSONArray(response);
                             modelList.clear();
-                            for (int i=0;i<jsonArray.length();i++) {
+                            for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject object = jsonArray.getJSONObject(i);
                                 if (checkvalue == 1) {
                                     String team_image = object.getString("team_image");
@@ -174,7 +214,7 @@ public class HomeActivity extends AppCompatActivity {
                                     String team_heading = object.getString("team_heading");
                                     String team_captain = object.getString("team_captain");
                                     String team_coach = object.getString("team_coach");
-                                    modelList.add(new HomeModel(team_image,team_id,team_heading,team_captain,team_coach));
+                                    modelList.add(new HomeModel(team_image, team_id, team_heading, team_captain, team_coach));
 
                                 } else {
                                     String image = object.getString("image");
@@ -183,7 +223,7 @@ public class HomeActivity extends AppCompatActivity {
 
                                 }
                             }
-                            setAdapter(mRecyclerView,adapter,modelList,checkvalue);
+                            setAdapter(mRecyclerView, adapter, modelList, checkvalue);
                             progressBar.setVisibility(View.GONE);
 
 
@@ -195,31 +235,32 @@ public class HomeActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "onErrorResponse: "+error.getMessage());
+                Log.d(TAG, "onErrorResponse: " + error.getMessage());
 
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> map =new HashMap<>();
-                map.put(parm,"yes");
+                Map<String, String> map = new HashMap<>();
+                map.put(parm, "yes");
                 return map;
             }
         };
         MySingletonClass.getMySingletonClass(HomeActivity.this).addToRequestQuee(stringRequest);
     }
 
-    private void setAdapter(RecyclerView recyclerView1, HomeAdapter adapter, List<HomeModel> modelList,int value) {
+    private void setAdapter(RecyclerView recyclerView1, HomeAdapter adapter, List<HomeModel> modelList, int value) {
         if (value == 1) {
             adapter = new HomeAdapter(HomeActivity.this, modelList, value);
             recyclerView1.setAdapter(adapter);
 
-        } if (value ==2){
-            adapter = new HomeAdapter(HomeActivity.this, modelList,2);
+        }
+        if (value == 2) {
+            adapter = new HomeAdapter(HomeActivity.this, modelList, 2);
             recyclerView1.setAdapter(adapter);
         }
-        if (value == 3){
-            adapter = new HomeAdapter(HomeActivity.this, modelList,3);
+        if (value == 3) {
+            adapter = new HomeAdapter(HomeActivity.this, modelList, 3);
             recyclerView1.setAdapter(adapter);
 
         }
@@ -227,31 +268,30 @@ public class HomeActivity extends AppCompatActivity {
 
     private void init() {
         progressBar = findViewById(R.id.myProgressbar);
-        progressBar.setBackgroundColor(Color.BLACK);
-         toolbar = findViewById(R.id.home_toolbar);
+        toolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(toolbar);
-        batting =findViewById(R.id.batting_recyclerview);
-        bowling =findViewById(R.id.bowlingrecycleview);
-        team =findViewById(R.id.teamrecycleview);
-        list =new ArrayList<>();
-        list1 =new ArrayList<>();
-        list3 =new ArrayList<>();
-        batting_manager =new LinearLayoutManager(HomeActivity.this);
+        batting = findViewById(R.id.batting_recyclerview);
+        bowling = findViewById(R.id.bowlingrecycleview);
+        team = findViewById(R.id.teamrecycleview);
+        list = new ArrayList<>();
+        list1 = new ArrayList<>();
+        list3 = new ArrayList<>();
+        batting_manager = new LinearLayoutManager(HomeActivity.this);
         batting_manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        bowling_manager =new LinearLayoutManager(HomeActivity.this);
+        bowling_manager = new LinearLayoutManager(HomeActivity.this);
         bowling_manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        team_manager =new GridLayoutManager(HomeActivity.this,3);
+        team_manager = new GridLayoutManager(HomeActivity.this, 3);
         batting.setHasFixedSize(true);
         batting.setLayoutManager(batting_manager);
         bowling.setHasFixedSize(true);
         bowling.setLayoutManager(bowling_manager);
         team.setHasFixedSize(true);
         team.setLayoutManager(team_manager);
-        toggle_image =findViewById(R.id.home_custom_toolbar_toggle_icon);
+        toggle_image = findViewById(R.id.home_custom_toolbar_toggle_icon);
         toggle_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this,DrawerActivity.class));
+                startActivity(new Intent(HomeActivity.this, DrawerActivity.class));
                 overridePendingTransition(R.anim.left_to_right,
                         R.anim.right_to_left);
             }
@@ -259,7 +299,7 @@ public class HomeActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getResources().getColor(R.color.colorPrimary));
+            window.setStatusBarColor(getResources().getColor(R.color.nice_color));
         }
 
 
@@ -298,7 +338,6 @@ public class HomeActivity extends AppCompatActivity {
         };
         MySingletonClass.getMySingletonClass(this).addToRequestQuee(stringRequest);
     }
-
 
 
 }

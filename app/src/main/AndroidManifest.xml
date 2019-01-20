@@ -19,6 +19,7 @@
         <activity
             android:name=".Activity.SplashActivity"
             android:label="@string/title_activity_main"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,23 +35,31 @@
             android:value="false" />
         <activity
             android:name=".Activity.HomeActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:screenOrientation="portrait"
+
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.BattingLeaderActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".Activity.BowlingLeaderActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.TeamActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.DrawerActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.DrawerFullActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activity.ExtraTeamItemActivity"></activity>
+        <activity android:name=".Activity.ExtraTeamItemActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".Utills.MyFirebaseMessagingService"
             android:stopWithTask="false">

@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
@@ -46,6 +47,7 @@ import sonu.finds.ipl2019.Adapter.DrawerFullAdapter;
 import sonu.finds.ipl2019.Model.DrawerFullModel;
 import sonu.finds.ipl2019.Model.DrawerFullTableModel;
 import sonu.finds.ipl2019.R;
+import sonu.finds.ipl2019.Utills.CustomToast;
 
 public class DrawerFullActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -84,7 +86,6 @@ public class DrawerFullActivity extends AppCompatActivity {
                             startActivity(new Intent(Settings.ACTION_SETTINGS));
                         }
                     });
-
 
                 }
                 else {
@@ -137,6 +138,11 @@ public class DrawerFullActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Log.d(TAG, "onResponse: " + response);
+                        if (response.equals("")){
+                            Toast toast =  new CustomToast(DrawerFullActivity.this).GetToast();
+                            toast.show();
+                            return;
+                        }
                         try {
                             JSONArray jsonArray = new JSONArray(response);
                             if (list1 == null) {
