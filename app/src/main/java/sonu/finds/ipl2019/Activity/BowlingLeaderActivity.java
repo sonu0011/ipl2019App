@@ -159,8 +159,8 @@ public class BowlingLeaderActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         Log.d(TAG, "onResponse: " + response);
                         if (response.equals("")){
-                            Toast toast =  new CustomToast(BowlingLeaderActivity.this).GetToast();
-                            toast.show();
+                            new CustomToast(BowlingLeaderActivity.this).showDialog();
+
                             return;
                         }
                         Log.d(TAG, "onResponse: " + response);
@@ -513,8 +513,8 @@ public class BowlingLeaderActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         if (response.equals("")){
-                            Toast toast =  new CustomToast(BowlingLeaderActivity.this).GetToast();
-                            toast.show();
+                            new CustomToast(BowlingLeaderActivity.this).showDialog();
+
                             return;
                         }
                         Log.d(TAG, "onResponse: " + batting_heading + response);
@@ -549,7 +549,7 @@ public class BowlingLeaderActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put("get_bowling_details1", "yes");
+                map.put("get_bowling_details", "yes");
                 map.put("query", batting_heading);
                 return map;
             }

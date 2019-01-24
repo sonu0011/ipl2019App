@@ -3,6 +3,7 @@ package sonu.finds.ipl2019.Utills;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -35,6 +36,12 @@ public class CheckInternetConnection extends BroadcastReceiver {
             View view = LayoutInflater.from(context).inflate(R.layout.home_no_internet_connection, null);
             mbuilder.setView(view);
             mbuilder.setCancelable(false);
+            mbuilder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
             mbuilder.create();
             alertDialog = mbuilder.show();
 

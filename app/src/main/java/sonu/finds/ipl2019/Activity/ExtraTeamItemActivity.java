@@ -123,8 +123,8 @@ public class ExtraTeamItemActivity extends AppCompatActivity {
                         Log.d(TAG, "onResponse: " + response);
 
                         if (response.equals("[]")){
-                            Toast toast =  new CustomToast(ExtraTeamItemActivity.this).GetToast();
-                            toast.show();
+                            new CustomToast(ExtraTeamItemActivity.this).showDialog();
+
                             return;
                         }
                         try {

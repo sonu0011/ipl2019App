@@ -374,7 +374,7 @@ public class BattingLeaderActivity extends AppCompatActivity {
     private TableRow.LayoutParams getLayoutParams() {
         TableRow.LayoutParams params = new TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
-                TableRow.LayoutParams.WRAP_CONTENT);
+                TableRow.LayoutParams.MATCH_PARENT,1.0f);
         params.setMargins(2, 0, 0, 2);
         return params;
     }
@@ -395,8 +395,7 @@ public class BattingLeaderActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         Log.d(TAG, "onResponse: " + batting_heading + response);
                         if (response.equals("")){
-                            Toast toast =  new CustomToast(BattingLeaderActivity.this).GetToast();
-                            toast.show();
+                             new CustomToast(BattingLeaderActivity.this).showDialog();
                             return;
                         }
                         try {

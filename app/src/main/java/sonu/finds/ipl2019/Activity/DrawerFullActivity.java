@@ -139,8 +139,8 @@ public class DrawerFullActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         Log.d(TAG, "onResponse: " + response);
                         if (response.equals("")){
-                            Toast toast =  new CustomToast(DrawerFullActivity.this).GetToast();
-                            toast.show();
+                            new CustomToast(DrawerFullActivity.this).showDialog();
+
                             return;
                         }
                         try {

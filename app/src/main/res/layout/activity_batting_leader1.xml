@@ -56,11 +56,11 @@ android:layout_below="@+id/mytoolbr"
     <HorizontalScrollView
         android:layout_below="@+id/tbl_bg"
         android:id="@+id/horizontalView"
-        android:layout_width="wrap_content"
+        android:scrollbars="horizontal||vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TableLayout
-            android:layout_marginTop="1dp"
             android:id="@+id/tablelayout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

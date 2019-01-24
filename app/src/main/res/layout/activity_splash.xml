@@ -9,20 +9,30 @@
 
 <ImageView
     android:layout_width="match_parent"
-    android:layout_height="300dp"
-    android:scaleType="centerCrop"
+    android:layout_height="200dp"
+    android:layout_margin="20dp"
     android:src="@drawable/ipl_logo"
+    android:layout_above="@+id/year_ipl"
     android:id="@+id/splash_image"
-    android:layout_centerInParent="true"/>
+    />
     <TextView
+        android:id="@+id/year_ipl"
         android:textColor="#28509B"
         android:textSize="35sp"
-        android:textStyle="bold"
         android:gravity="center"
-        android:layout_below="@+id/splash_image"
+        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="@string/_2019"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_below="@+id/year_ipl"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="50dp"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
